@@ -8,12 +8,17 @@ extern "C" {
 
 typedef void* Unit;
 typedef void* UnitCommand;
-
+typedef void* Race;
 typedef void* Player;
 typedef void* Region;
 typedef void* Order;
+typedef void* Force;
+typedef void* Color;
+
 
 typedef void* UnitType;
+typedef void* PlayerType;
+typedef void* WeaponType;
 typedef void* TechType;
 typedef void* UpgradeType;
 typedef void* UnitCommandType;

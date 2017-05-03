@@ -13,16 +13,17 @@ typedef void* Player;
 typedef void* Region;
 typedef void* Order;
 typedef void* Force;
-typedef void* Color;
-
+typedef void* Bullet;
 
 typedef void* UnitType;
 typedef void* PlayerType;
 typedef void* WeaponType;
+typedef void* BulletType;
 typedef void* TechType;
 typedef void* UpgradeType;
 typedef void* UnitCommandType;
 
+typedef struct { int value; } Color;
 typedef struct { int x; int y; } Position;
 typedef struct { int x; int y; } TilePosition;
 

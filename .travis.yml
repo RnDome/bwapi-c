@@ -1,0 +1,26 @@
+language: cpp
+
+dist: trusty
+sudo: false
+cache:
+  apt: true
+addons:
+  apt:
+    packages:
+    - p7zip-full
+
+notifications:
+  email: false
+
+before_install:
+  - mkdir -p $HOME/BWAPI_RELEASES
+  - wget -N https://github.com/bwapi/bwapi/releases/download/v4.2.0/BWAPI_420.7z -O $HOME/BWAPI_RELEASES/BWAPI_420.7z
+  - 7z x -o$HOME/BWAPI_RELEASES/BWAPI_420 -i\!Release_Binary/include -y $HOME/BWAPI_RELEASES/BWAPI_420.7z
+
+before_script:
+  - mkdir -p build
+  - cd build
+  - cmake ..
+
+script:
+  - cmake --build . -- all --keep-going

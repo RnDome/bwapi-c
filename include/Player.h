@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 int Player_getID(Player* self);
-// String* Player_getName(Player* self);
+String* Player_getName(Player* self);
 // TODO Unitset &getUnits();
 Race Player_getRace(Player* self);
 PlayerType Player_getType(Player* self);

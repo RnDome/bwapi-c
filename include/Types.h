@@ -9,12 +9,12 @@ extern "C" {
 /// These are interface-only types with provided API
 ///  You should use them only by pointer
 
-typedef struct Unit Unit;
-typedef struct UnitCommand UnitCommand;
-typedef struct Player Player;
-typedef struct Region Region;
-typedef struct Force Force;
-typedef struct Bullet Bullet;
+typedef struct Unit_ Unit;
+typedef struct UnitCommand_ UnitCommand;
+typedef struct Player_ Player;
+typedef struct Region_ Region;
+typedef struct Force_ Force;
+typedef struct Bullet_ Bullet;
 
 /// These are value-only structs with no API
 ///  You should implement API on your own
@@ -35,7 +35,7 @@ typedef struct Position { int x; int y; } Position;
 typedef struct TilePosition { int x; int y; } TilePosition;
 
 // Custom type to map getName functions
-typedef struct String String;
+typedef struct String_ String;
 
 #ifdef __cplusplus
 } // extern "C"

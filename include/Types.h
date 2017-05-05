@@ -6,29 +6,36 @@
 extern "C" {
 #endif
 
-typedef void* Unit;
-typedef void* UnitCommand;
-typedef void* Race;
-typedef void* Player;
-typedef void* Region;
-typedef void* Order;
-typedef void* Force;
-typedef void* Bullet;
+/// These are interface-only types with provided API
+///  You should use them only by pointer
 
-typedef void* UnitType;
-typedef void* PlayerType;
-typedef void* WeaponType;
-typedef void* TechType;
-typedef void* UpgradeType;
-typedef void* UnitCommandType;
+typedef struct Unit Unit;
+typedef struct UnitCommand UnitCommand;
+typedef struct Player Player;
+typedef struct Region Region;
+typedef struct Force Force;
+typedef struct Bullet Bullet;
 
-typedef struct { int value; } BulletType;
+/// These are value-only structs with no API
+///  You should implement API on your own
 
-typedef struct { int value; } Color;
-typedef struct { int x; int y; } Position;
-typedef struct { int x; int y; } TilePosition;
+typedef struct Race { int id; } Race;
+typedef struct Order { int id; } Order;
 
+typedef struct UnitType { int id; } UnitType;
+typedef struct PlayerType { int id; } PlayerType;
+typedef struct WeaponType { int id; } WeaponType;
+typedef struct TechType { int id; } TechType;
+typedef struct UpgradeType { int id; } UpgradeType;
+typedef struct UnitCommandType { int id; } UnitCommandType;
+typedef struct BulletType { int id; } BulletType;
 
+typedef struct Color { int color; } Color;
+typedef struct Position { int x; int y; } Position;
+typedef struct TilePosition { int x; int y; } TilePosition;
+
+// Custom type to map getName functions
+typedef struct String String;
 
 #ifdef __cplusplus
 } // extern "C"

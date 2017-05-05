@@ -92,7 +92,7 @@ int Player_getID(Player* self) {
 
 String* Player_getName(Player* self) {
     std::string name = reinterpret_cast<BWAPI::Player>(self)->getName();
-    return String_newFrom(name.data(), name.length());
+    return String_new(name.data(), name.length());
 }
 
 Race Player_getRace(Player* self) {

@@ -8,7 +8,7 @@ struct String_ {
     size_t length;
 };
 
-String* String_newFrom(const char* data, size_t len) {
+String* String_new(const char* data, size_t len) {
     String* self = new String();
     self->length = len;
 

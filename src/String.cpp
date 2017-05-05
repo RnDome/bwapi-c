@@ -5,10 +5,10 @@
 
 struct String_ {
     char* data;
-    int length;
+    size_t length;
 };
 
-String* String_newFrom(const char* data, int len) {
+String* String_newFrom(const char* data, size_t len) {
     String* self = new String();
     self->length = len;
 
@@ -23,7 +23,7 @@ char* String_data(String* self) {
     return self->data;
 }
 
-int String_len(String* self) {
+size_t String_len(String* self) {
     return self->length;
 }
 

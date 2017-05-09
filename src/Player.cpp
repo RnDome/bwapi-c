@@ -12,6 +12,7 @@
 #include "UpgradeType.hpp"
 #include "WeaponType.hpp"
 #include "IteratorImpl.hpp"
+#include "Cast.hpp"
 
 namespace BWAPI {
     typedef const PlayerInterface* ConstPlayer;

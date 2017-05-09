@@ -1,5 +1,6 @@
 #include <Unit.h>
 #include <BWAPI/Unit.h>
+#include <BWAPI/Unitset.h>
 
 #include "Position.hpp"
 #include "Order.hpp"
@@ -7,6 +8,7 @@
 #include "UpgradeType.hpp"
 #include "UnitType.hpp"
 #include "UnitCommand.hpp"
+#include "IteratorImpl.hpp"
 
 int Unit_getID(Unit* self) {
     return reinterpret_cast<BWAPI::Unit>(self)->getID();
@@ -292,6 +294,11 @@ Unit* Unit_getTransport(Unit* self) {
     return reinterpret_cast<Unit*>( reinterpret_cast<BWAPI::Unit>(self)->getTransport() );
 }
 
+UnitIterator* Unit_getLoadedUnits(Unit* self) {
+    const auto units = reinterpret_cast<BWAPI::UnitInterface*>(self)->getLoadedUnits();
+    return into_iter<UnitIterator>(units);
+}
+
 int Unit_getSpaceRemaining(Unit* self) {
     return reinterpret_cast<BWAPI::Unit>(self)->getSpaceRemaining();
 }
@@ -300,8 +307,18 @@ Unit* Unit_getCarrier(Unit* self) {
     return reinterpret_cast<Unit*>( reinterpret_cast<BWAPI::Unit>(self)->getCarrier() );
 }
 
+UnitIterator* Unit_getInterceptors(Unit* self) {
+    const auto interceptors = reinterpret_cast<BWAPI::UnitInterface*>(self)->getInterceptors();
+    return into_iter<UnitIterator>(interceptors);
+}
+
 Unit* Unit_getHatchery(Unit* self) {
     return reinterpret_cast<Unit*>( reinterpret_cast<BWAPI::Unit>(self)->getHatchery() );
+}
+
+UnitIterator* Unit_getLarva(Unit* self) {
+    const auto larva = reinterpret_cast<BWAPI::UnitInterface*>(self)->getLarva();
+    return into_iter<UnitIterator>(larva);
 }
 
 bool Unit_hasNuke(Unit* self) {

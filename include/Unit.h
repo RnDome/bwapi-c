@@ -87,12 +87,12 @@ Unit* Unit_getAddon(Unit* self);
 Unit* Unit_getNydusExit(Unit* self);
 Unit* Unit_getPowerUp(Unit* self);
 Unit* Unit_getTransport(Unit* self);
-// TODO Unitset getLoadedUnits
+UnitIterator* Unit_getLoadedUnits(Unit* self);
 int Unit_getSpaceRemaining(Unit* self);
 Unit* Unit_getCarrier(Unit* self);
-// TODO Unitset getInterceptors
+UnitIterator* Unit_getInterceptors(Unit* self);
 Unit* Unit_getHatchery(Unit* self);
-// TODO Unitset getLarva
+UnitIterator* Unit_getLarva(Unit* self);
 // TODO Unitset getUnitsInRadius(int radius, const UnitFilter &pred)
 // TODO Unitset getUnitsInWeaponRange(WeaponType weapon, const UnitFilter &pred)
 // TODO Unit* getClosestUnit(const UnitFilter &pred, int radius)

@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 int Player_getID(Player* self);
-BwString* Player_getName(Player* self);
+BwString* Player_getName(const Player* self);
 UnitIterator* Player_getUnits(Player* self);
 Race Player_getRace(Player* self);
 PlayerType Player_getType(Player* self);

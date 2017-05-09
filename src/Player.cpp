@@ -13,13 +13,17 @@
 #include "WeaponType.hpp"
 #include "IteratorImpl.hpp"
 
+namespace BWAPI {
+    typedef const PlayerInterface* ConstPlayer;
+}
+
 int Player_getID(Player* self) {
     return reinterpret_cast<BWAPI::Player>(self)->getID();
 }
 
-BwString* Player_getName(Player* self) {
-    std::string name = reinterpret_cast<BWAPI::Player>(self)->getName();
-    return BwString_new(name.data(), name.length());
+BwString* Player_getName(const Player* self) {
+    const std::string& name = safe_cast<BWAPI::ConstPlayer>(self)->getName();
+    return BwString_new(name.c_str(), name.length());
 }
 
 UnitIterator* Player_getUnits(Player* self) {

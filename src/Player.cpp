@@ -1,90 +1,15 @@
 #include <Player.h>
 #include <BwString.h>
 #include <BWAPI/Player.h>
-#include <BWAPI/PlayerType.h>
-#include <BWAPI/TechType.h>
-#include <BWAPI/Color.h>
 
-BWAPI::Race race_to_bw(Race race) {
-    return BWAPI::Race(race.id);
-}
-
-Race race_from_bw(BWAPI::Race type) {
-    Race self;
-    self.id = type.getID();
-    return self;
-}
-
-BWAPI::Color color_to_bw(Color color) {
-    return BWAPI::Color(color.color);
-}
-
-Color color_from_bw(BWAPI::Color type) {
-    Color self;
-    self.color = type.getID();
-    return self;
-}
-
-BWAPI::PlayerType playertype_to_bw(PlayerType type) {
-    return BWAPI::PlayerType(type.id);
-}
-
-PlayerType playertype_from_bw(BWAPI::PlayerType type) {
-    PlayerType self;
-    self.id = type.getID();
-    return self;
-}
-
-BWAPI::TilePosition tileposition_to_bw(TilePosition position) {
-    return BWAPI::TilePosition(position.x, position.y);
-}
-
-TilePosition tileposition_from_bw(BWAPI::TilePosition position) {
-    TilePosition self;
-    self.x = position.x;
-    self.y = position.y;
-    return self;
-}
-
-BWAPI::UnitType unittype_to_bw(UnitType type) {
-    return BWAPI::UnitType(type.id);
-}
-
-UnitType unittype_from_bw(BWAPI::UnitType type) {
-    UnitType self;
-    self.id = type.getID();
-    return self;
-}
-
-BWAPI::TechType techtype_to_bw(TechType type) {
-    return BWAPI::TechType(type.id);
-}
-
-TechType techtype_from_bw(BWAPI::TechType type) {
-    TechType self;
-    self.id = type.getID();
-    return self;
-}
-
-BWAPI::UpgradeType upgradetype_to_bw(UpgradeType type) {
-    return BWAPI::UpgradeType(type.id);
-}
-
-UpgradeType upgradetype_from_bw(BWAPI::UpgradeType type) {
-    UpgradeType self;
-    self.id = type.getID();
-    return self;
-}
-
-BWAPI::WeaponType weapontype_to_bw(WeaponType type) {
-    return BWAPI::WeaponType(type.id);
-}
-
-WeaponType weapontype_from_bw(BWAPI::WeaponType type) {
-    WeaponType self;
-    self.id = type.getID();
-    return self;
-}
+#include "Color.hpp"
+#include "Position.hpp"
+#include "Race.hpp"
+#include "PlayerType.hpp"
+#include "UnitType.hpp"
+#include "TechType.hpp"
+#include "UpgradeType.hpp"
+#include "WeaponType.hpp"
 
 int Player_getID(Player* self) {
     return reinterpret_cast<BWAPI::Player>(self)->getID();

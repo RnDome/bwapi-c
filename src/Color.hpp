@@ -3,11 +3,11 @@
 #include <Types.h>
 #include <BWAPI/Color.h>
 
-BWAPI::Color color_to_bw(Color color) {
+inline BWAPI::Color color_to_bw(Color color) {
     return BWAPI::Color(color.color);
 }
 
-Color color_from_bw(BWAPI::Color type) {
+inline Color color_from_bw(BWAPI::Color type) {
     Color self;
     self.color = type.getID();
     return self;

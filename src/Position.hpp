@@ -24,3 +24,14 @@ inline TilePosition tileposition_from_bw(BWAPI::TilePosition position) {
     self.y = position.y;
     return self;
 }
+
+inline BWAPI::WalkPosition walkposition_to_bw(WalkPosition position) {
+    return BWAPI::WalkPosition(position.x, position.y);
+}
+
+inline WalkPosition walkposition_from_bw(BWAPI::WalkPosition position) {
+    WalkPosition self;
+    self.x = position.x;
+    self.y = position.y;
+    return self;
+}

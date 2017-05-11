@@ -40,8 +40,8 @@ typedef struct Position { int x; int y; } Position;
 typedef struct TilePosition { int x; int y; } TilePosition;
 typedef struct WalkPosition { int x; int y; } WalkPosition;
 
-// Custom type to map getName functions
-typedef struct String_ String;
+// Custom type to map functions returning std::string
+typedef struct BwString_ BwString;
 
 #ifdef __cplusplus
 } // extern "C"

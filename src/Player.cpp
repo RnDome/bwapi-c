@@ -1,5 +1,5 @@
 #include <Player.h>
-#include <String.h>
+#include <BwString.h>
 #include <BWAPI/Player.h>
 #include <BWAPI/PlayerType.h>
 #include <BWAPI/TechType.h>
@@ -90,9 +90,9 @@ int Player_getID(Player* self) {
     return reinterpret_cast<BWAPI::Player>(self)->getID();
 }
 
-String* Player_getName(Player* self) {
+BwString* Player_getName(Player* self) {
     std::string name = reinterpret_cast<BWAPI::Player>(self)->getName();
-    return String_new(name.data(), name.length());
+    return BwString_new(name.data(), name.length());
 }
 
 Race Player_getRace(Player* self) {

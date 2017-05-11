@@ -1,26 +1,8 @@
 #include <Bullet.h>
 #include <BWAPI/Bullet.h>
 
-BWAPI::BulletType bullettype_to_bw(BulletType type) {
-    return BWAPI::BulletType(type.id);
-}
-
-BulletType bullettype_from_bw(BWAPI::BulletType type) {
-    BulletType self;
-    self.id = type.getID();
-    return self;
-}
-
-BWAPI::Position position_to_bw(Position position) {
-    return BWAPI::Position(position.x, position.y);
-}
-
-Position position_from_bw(BWAPI::Position position) {
-    Position self;
-    self.x = position.x;
-    self.y = position.y;
-    return self;
-}
+#include "BulletType.hpp"
+#include "Position.hpp"
 
 int Bullet_getID(Bullet* self) {
     return reinterpret_cast<BWAPI::Bullet>(self)->getID();

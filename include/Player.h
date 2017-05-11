@@ -62,5 +62,5 @@ bool Player_isUnitAvailable(Player* self, UnitType unit);
 bool Player_hasUnitTypeRequirement(Player* self, UnitType unit, int amount);
 
 #ifdef __cplusplus
-}
+} // extern "C"
 #endif

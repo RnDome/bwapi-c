@@ -23,5 +23,5 @@ int Region_getDistance(Region* self, Region* other);
 //TODO Unitset getUnits(const UnitFilter &pred = nullptr) const;
 
 #ifdef __cplusplus
-}
+} // extern "C"
 #endif

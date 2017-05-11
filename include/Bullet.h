@@ -21,5 +21,5 @@ int Bullet_getRemoveTimer(Bullet* self);
 bool Bullet_isVisible(Bullet* self, Player* player);
 
 #ifdef __cplusplus
-}
+} // extern "C"
 #endif

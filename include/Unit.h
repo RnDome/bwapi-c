@@ -36,7 +36,7 @@ bool Unit_hasPath_Position(Unit* self, Position target);
 bool Unit_hasPath_Unit(Unit* self, Unit* target);
 
 int Unit_getLastCommandFrame(Unit* self);
-UnitCommand* Unit_getLastCommand(Unit* self);
+UnitCommand Unit_getLastCommand(Unit* self);
 Player* Unit_getLastAttackingPlayer(Unit* self);
 
 UnitType Unit_getInitialType(Unit* self);
@@ -151,7 +151,7 @@ bool Unit_isPowered(Unit* self);
 bool Unit_isUpgrading(Unit* self);
 bool Unit_isVisible(Unit* self, Player* player);
 bool Unit_isTargetable(Unit* self);
-bool Unit_issueCommand(Unit* self);
+bool Unit_issueCommand(Unit* self, UnitCommand command);
 bool Unit_attack_Position(Unit* self, Position target, bool shiftQueueCommand);
 bool Unit_attack_Unit(Unit* self, Unit* target, bool shiftQueueCommand);
 
@@ -206,8 +206,8 @@ bool Unit_useTech_Position(Unit* self, TechType tech, Position target);
 bool Unit_useTech_Unit(Unit* self, TechType tech, Unit* target);
 
 bool Unit_placeCOP(Unit* self, TilePosition target);
-bool Unit_canIssueCommand(Unit* self, UnitCommand* command, bool checkCanUseTechPositionOnPositions, bool checkCanUseTechUnitOnUnits, bool checkCanBuildUnitType, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility);
-bool Unit_canIssueCommandGrouped(Unit* self, UnitCommand* command, bool checkCanUseTechPositionOnPositions, bool checkCanUseTechUnitOnUnits, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility);
+bool Unit_canIssueCommand(Unit* self, UnitCommand command, bool checkCanUseTechPositionOnPositions, bool checkCanUseTechUnitOnUnits, bool checkCanBuildUnitType, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility);
+bool Unit_canIssueCommandGrouped(Unit* self, UnitCommand command, bool checkCanUseTechPositionOnPositions, bool checkCanUseTechUnitOnUnits, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility);
 
 bool Unit_canCommand(Unit* self);
 bool Unit_canCommandGrouped(Unit* self, bool checkCommandibility);
@@ -329,7 +329,7 @@ bool Unit_canUseTechUnit_Unit(Unit* self, TechType tech, Unit* targetUnit, bool 
 bool Unit_canUseTechPosition(Unit* self, TechType tech, bool checkCanIssueCommandType, bool checkCommandibility);
 bool Unit_canUseTechPosition_Position(Unit* self, TechType tech, Position target, bool checkTargetsPositions, bool checkCanIssueCommandType, bool checkCommandibility);
 
-bool Unit_canPlaceCOP(bool checkCommandibility);
+bool Unit_canPlaceCOP(Unit* self, bool checkCommandibility);
 bool Unit_canPlaceCOP_TilePosition(Unit* self, TilePosition target, bool checkCanIssueCommandType, bool checkCommandibility);
 
 #ifdef __cplusplus

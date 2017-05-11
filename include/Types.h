@@ -11,7 +11,6 @@ extern "C" {
 ///  You should use them only by pointer
 
 typedef struct Unit_ Unit;
-typedef struct UnitCommand_ UnitCommand;
 typedef struct Player_ Player;
 typedef struct Region_ Region;
 typedef struct Force_ Force;
@@ -39,6 +38,15 @@ typedef struct GameType { int id; } GameType;
 typedef struct Position { int x; int y; } Position;
 typedef struct TilePosition { int x; int y; } TilePosition;
 typedef struct WalkPosition { int x; int y; } WalkPosition;
+
+typedef struct UnitCommand {
+    Unit* unit;
+    UnitCommandType type;
+    Unit* target;
+    int x;
+    int y;
+    int extra;
+} UnitCommand;
 
 // Custom type to map functions returning std::string
 typedef struct BwString_ BwString;

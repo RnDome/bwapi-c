@@ -1,5 +1,9 @@
 # Find BWAPI (C++ library https://github.com/bwapi/bwapi/releases)
 #  Input variable: BWAPI_PATH
+#  Output variables:
+#    BWAPI_INCLUDE_DIRS
+#    BWAPI_LIB_DEBUG // BWAPId.lib
+#    BWAPI_LIB_RELEASE // BWAPI.lib
 
 find_path(BWAPI_INCLUDE_DIRS NAMES BWAPI.h PATHS ${BWAPI_PATH}/include)
 
@@ -9,7 +13,9 @@ set(old_suffixes ${CMAKE_FIND_LIBRARY_SUFFIXES})
 set(CMAKE_FIND_LIBRARY_PREFIXES "")
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".dll")
 
-find_library(BWAPI_LIBRARIES NAMES BWAPI PATHS ${BWAPI_PATH}/lib)
+find_library(BWAPI_LIB_DEBUG NAMES BWAPId PATHS ${BWAPI_PATH}/lib)
+find_library(BWAPI_LIB_RELEASE NAMES BWAPI PATHS ${BWAPI_PATH}/lib)
+set(BWAPI_LIBRARIES ${BWAPI_LIB_DEBUG} ${BWAPI_LIB_RELEASE})
 
 set(CMAKE_FIND_LIBRARY_PREFIXES ${old_prefixes})
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${old_suffixes})

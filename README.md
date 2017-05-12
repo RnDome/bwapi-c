@@ -1,5 +1,9 @@
-# bwapi-c [![Build Status](https://travis-ci.org/RnDome/bwapi-c.svg?branch=master)](https://travis-ci.org/RnDome/bwapi-c)
-C bindings to the BWAPI library 
+bwapi-c
+=======
+
+[![Build Status](https://travis-ci.org/RnDome/bwapi-c.svg)](https://travis-ci.org/RnDome/bwapi-c) [![Build status](https://ci.appveyor.com/api/projects/status/3l3mngo6cf33hdrw?svg=true)](https://ci.appveyor.com/project/kpp/bwapi-c)
+
+C language bindings to the BWAPI library 
 
 # BWAPI again? Why?
 

@@ -1,12 +1,7 @@
 #include <AIModule.h>
 #include <BWAPI/AIModule.h>
 
-Position position_from_bw(BWAPI::Position position) {
-    Position self;
-    self.x = position.x;
-    self.y = position.y;
-    return self;
-}
+#include "Position.hpp"
 
 class AIModuleWrapper : public BWAPI::AIModule
 {

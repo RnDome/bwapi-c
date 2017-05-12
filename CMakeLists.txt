@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(bwapi)
+project(bwapi-c VERSION 0.0.1)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
 
@@ -27,3 +27,8 @@ if (MSVC)
     add_library(ExampleDLL MODULE "${CMAKE_SOURCE_DIR}/example/Dll.cpp")
     target_link_libraries(ExampleDLL BWAPIC)
 endif()
+
+install(DIRECTORY include/ DESTINATION include)
+install(TARGETS BWAPIC DESTINATION lib)
+set(CPACK_GENERATOR "ZIP")
+include(CPack)

@@ -1,7 +1,7 @@
 bwapi-c
 =======
 
-[![Build Status](https://travis-ci.org/RnDome/bwapi-c.svg)](https://travis-ci.org/RnDome/bwapi-c) [![Build status](https://ci.appveyor.com/api/projects/status/3l3mngo6cf33hdrw?svg=true)](https://ci.appveyor.com/project/kpp/bwapi-c)
+[![Build Status](https://travis-ci.org/RnDome/bwapi-c.svg?branch=master)](https://travis-ci.org/RnDome/bwapi-c/branches) [![Build status](https://ci.appveyor.com/api/projects/status/3l3mngo6cf33hdrw/branch/master?svg=true)](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master)
 
 C language bindings to the BWAPI library 
 
@@ -20,7 +20,7 @@ bwapi-c/build $ make
 `BWAPI_PATH` must point to directory with BWAPI release.
 
 # Usage on Linux
-You should get `BWAPIC.lib` that was build on Windows with MSVC.
+You should get `BWAPIC.lib` that was build on Windows with MSVC. See [AppVeyor build artifacts](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master).
 
 ```
 ~/bwapi-c/example $ ls

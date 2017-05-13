@@ -161,7 +161,7 @@ bool Game_setVision(Game* self, Player* player, bool enabled);
 int Game_elapsedTime(Game* self);
 void Game_setCommandOptimizationLevel(Game* self, int level);
 int Game_countdownTimer(Game* self);
-// TODO    virtual const Regionset &getAllRegions();
+RegionIterator* Game_getAllRegions(Game* self);
 Region* Game_getRegionAt(Game* self, Position position);
 int Game_getLastEventTime(Game* self);
 bool Game_setRevealAll(Game* self, bool reveal);

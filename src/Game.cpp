@@ -5,6 +5,7 @@
 #include <BWAPI/Playerset.h>
 #include <BWAPI/Forceset.h>
 #include <BWAPI/Bulletset.h>
+#include <BWAPI/Regionset.h>
 
 #include "GameType.hpp"
 #include "UnitType.hpp"
@@ -490,6 +491,11 @@ void Game_setCommandOptimizationLevel(Game* self, int level) {
 
 int Game_countdownTimer(Game* self) {
     return reinterpret_cast<BWAPI::Game*>(self)->countdownTimer();
+}
+
+RegionIterator* Game_getAllRegions(Game* self) {
+    const auto regions = reinterpret_cast<BWAPI::Game*>(self)->getAllRegions();
+    return into_iter<RegionIterator>(regions);
 }
 
 Region* Game_getRegionAt(Game* self, Position position) {

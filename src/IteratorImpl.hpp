@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <Iterator.h>
 
 // FIXME Probbaly there is something similar in the BWAPI
@@ -30,7 +31,7 @@ public:
     typedef typename Container::const_iterator Iter;
 
     OwningIterator(Container container)
-        : container(container), iter(container.begin())
+        : container(std::move(container)), iter(container.begin())
     {
         static_assert(type != itUnknown, "Iterator type must be valid");
     }

@@ -295,7 +295,7 @@ Unit* Unit_getTransport(Unit* self) {
 }
 
 UnitIterator* Unit_getLoadedUnits(Unit* self) {
-    const auto units = reinterpret_cast<BWAPI::Unit>(self)->getLoadedUnits();
+    const auto&& units = reinterpret_cast<BWAPI::UnitInterface*>(self)->getLoadedUnits();
     return into_iter<UnitIterator>(units);
 }
 
@@ -308,7 +308,7 @@ Unit* Unit_getCarrier(Unit* self) {
 }
 
 UnitIterator* Unit_getInterceptors(Unit* self) {
-    const auto interceptors = reinterpret_cast<BWAPI::Unit>(self)->getInterceptors();
+    const auto&& interceptors = reinterpret_cast<BWAPI::UnitInterface*>(self)->getInterceptors();
     return into_iter<UnitIterator>(interceptors);
 }
 
@@ -317,7 +317,7 @@ Unit* Unit_getHatchery(Unit* self) {
 }
 
 UnitIterator* Unit_getLarva(Unit* self) {
-    const auto larva = reinterpret_cast<BWAPI::Unit>(self)->getLarva();
+    const auto&& larva = reinterpret_cast<BWAPI::UnitInterface*>(self)->getLarva();
     return into_iter<UnitIterator>(larva);
 }
 

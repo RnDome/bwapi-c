@@ -1,6 +1,7 @@
 #include <Player.h>
 #include <BwString.h>
 #include <BWAPI/Player.h>
+#include <BWAPI/Unitset.h>
 
 #include "Color.hpp"
 #include "Position.hpp"
@@ -10,6 +11,7 @@
 #include "TechType.hpp"
 #include "UpgradeType.hpp"
 #include "WeaponType.hpp"
+#include "IteratorImpl.hpp"
 
 int Player_getID(Player* self) {
     return reinterpret_cast<BWAPI::Player>(self)->getID();
@@ -18,6 +20,11 @@ int Player_getID(Player* self) {
 BwString* Player_getName(Player* self) {
     std::string name = reinterpret_cast<BWAPI::Player>(self)->getName();
     return BwString_new(name.data(), name.length());
+}
+
+UnitIterator* Player_getUnits(Player* self) {
+    const auto units = reinterpret_cast<BWAPI::Player>(self)->getUnits();
+    return into_iter<UnitIterator>(units);
 }
 
 Race Player_getRace(Player* self) {

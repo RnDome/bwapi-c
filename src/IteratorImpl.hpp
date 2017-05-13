@@ -6,6 +6,10 @@
 enum IteratorType {
     itUnknown = 0,
     itUnit,
+    itPlayer,
+    itForce,
+    itBullet,
+    itRegion,
 };
 
 class IteratorBase {
@@ -51,6 +55,22 @@ template<class T> struct GetIterType {
 
 template<> struct GetIterType<UnitIterator> {
     enum { value = itUnit };
+};
+
+template<> struct GetIterType<PlayerIterator> {
+    enum { value = itPlayer };
+};
+
+template<> struct GetIterType<ForceIterator> {
+    enum { value = itForce };
+};
+
+template<> struct GetIterType<BulletIterator> {
+    enum { value = itBullet };
+};
+
+template<> struct GetIterType<RegionIterator> {
+    enum { value = itRegion };
 };
 
 template<class Out, class Container>

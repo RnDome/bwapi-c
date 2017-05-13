@@ -23,8 +23,11 @@ typedef struct Game_ Game;
 typedef struct Race { int id; } Race;
 typedef struct Order { int id; } Order;
 typedef struct Color { int color; } Color;
+typedef struct CoordinateType { int id; } CoordinateType;
+
 typedef struct MouseButton { int id; } MouseButton;
 typedef struct KeyButton { int id; } KeyButton;
+typedef struct Error { int id; } Error;
 
 typedef struct UnitType { int id; } UnitType;
 typedef struct PlayerType { int id; } PlayerType;

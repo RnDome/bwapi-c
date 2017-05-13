@@ -5,6 +5,7 @@
 #include <BWAPI/Playerset.h>
 #include <BWAPI/Forceset.h>
 #include <BWAPI/Bulletset.h>
+#include <BWAPI/Regionset.h>
 
 #include "GameType.hpp"
 #include "UnitType.hpp"
@@ -13,6 +14,8 @@
 #include "Position.hpp"
 #include "Color.hpp"
 #include "Input.hpp"
+#include "Error.hpp"
+#include "CoordinateType.hpp"
 #include "IteratorImpl.hpp"
 
 ForceIterator* Game_getForces(Game* self) {
@@ -141,6 +144,14 @@ void Game_enableFlag(Game* self, int flag) {
     reinterpret_cast<BWAPI::Game*>(self)->enableFlag(flag);
 }
 
+Error Game_getLastError(Game* self) {
+    return error_from_bw( reinterpret_cast<BWAPI::Game*>(self)->getLastError() );
+}
+
+bool Game_setLastError(Game* self, Error e) {
+    return reinterpret_cast<BWAPI::Game*>(self)->setLastError(error_to_bw(e));
+}
+
 int Game_mapWidth(Game* self) {
     return reinterpret_cast<BWAPI::Game*>(self)->mapWidth();
 }
@@ -221,18 +232,18 @@ bool Game_canUpgrade(Game* self, UpgradeType type, Unit* unit, bool checkCanIssu
     return reinterpret_cast<BWAPI::Game*>(self)->canUpgrade(upgradetype_to_bw(type), reinterpret_cast<BWAPI::Unit>(unit), checkCanIssueCommandType);
 }
 
-void Game_printf(Game* self, const char *format, ...) {
+void Game_printf(Game* self, const char* format, ...) {
     va_list args;
     va_start(args, format);
     Game_vPrintf(self, format, args);
     va_end(args);
 }
 
-void Game_vPrintf(Game* self, const char *format, va_list args) {
+void Game_vPrintf(Game* self, const char* format, va_list args) {
     reinterpret_cast<BWAPI::Game*>(self)->vPrintf(format, args);
 }
 
-void Game_sendText(Game* self, const char *format, ...)
+void Game_sendText(Game* self, const char* format, ...)
 {
     va_list args;
     va_start(args, format);
@@ -240,18 +251,18 @@ void Game_sendText(Game* self, const char *format, ...)
     va_end(args);
 }
 
-void Game_vSendText(Game* self, const char *format, va_list args) {
+void Game_vSendText(Game* self, const char* format, va_list args) {
     reinterpret_cast<BWAPI::Game*>(self)->vSendText(format, args);
 }
 
-void Game_sendTextEx(Game* self, bool toAllies, const char *format, ...) {
+void Game_sendTextEx(Game* self, bool toAllies, const char* format, ...) {
     va_list args;
     va_start(args, format);
     Game_vSendTextEx(self, toAllies, format, args);
     va_end(args);
 }
 
-void Game_vSendTextEx(Game* self, bool toAllies, const char *format, va_list args) {
+void Game_vSendTextEx(Game* self, bool toAllies, const char* format, va_list args) {
     reinterpret_cast<BWAPI::Game*>(self)->vSendTextEx(toAllies, format, args);
 }
 
@@ -327,6 +338,42 @@ PlayerIterator* Game_observers(Game* self) {
     return into_iter<PlayerIterator>(observers);
 }
 
+void Game_vDrawText(Game* self, CoordinateType ctype, int x, int y, const char* format, va_list args) {
+    reinterpret_cast<BWAPI::Game*>(self)->vDrawText(coordinatetype_to_bw(ctype), x, y, format, args);
+}
+
+void Game_drawText(Game* self, CoordinateType ctype, int x, int y, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    reinterpret_cast<BWAPI::Game*>(self)->vDrawText(coordinatetype_to_bw(ctype), x, y, format, args);
+    va_end(args);
+}
+
+void Game_drawTextMap(Game* self, Position p, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    reinterpret_cast<BWAPI::Game*>(self)->vDrawText(BWAPI::CoordinateType::Map, p.x, p.y, format, args);
+    va_end(args);
+}
+
+void Game_drawTextMouse(Game* self, Position p, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    reinterpret_cast<BWAPI::Game*>(self)->vDrawText(BWAPI::CoordinateType::Mouse, p.x, p.y, format, args);
+    va_end(args);
+}
+
+void Game_drawTextScreen(Game* self, Position p, const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    reinterpret_cast<BWAPI::Game*>(self)->vDrawText(BWAPI::CoordinateType::Screen, p.x, p.y, format, args);
+    va_end(args);
+}
+
+void Game_drawBox(Game* self, CoordinateType ctype, int left, int top, int right, int bottom, Color color, bool isSolid) {
+    reinterpret_cast<BWAPI::Game*>(self)->drawBox(coordinatetype_to_bw(ctype), left, top, right, bottom, color_to_bw(color), isSolid);
+}
+
 void Game_drawBoxMap(Game* self, Position leftTop, Position rightBottom, Color color, bool isSolid) {
     return reinterpret_cast<BWAPI::Game*>(self)->drawBoxMap(position_to_bw(leftTop), position_to_bw(rightBottom), color_to_bw(color), isSolid);
 }
@@ -337,6 +384,10 @@ void Game_drawBoxMouse(Game* self, Position leftTop, Position rightBottom, Color
 
 void Game_drawBoxScreen(Game* self, Position leftTop, Position rightBottom, Color color, bool isSolid) {
     reinterpret_cast<BWAPI::Game*>(self)->drawBoxScreen(position_to_bw(leftTop), position_to_bw(rightBottom), color_to_bw(color), isSolid);
+}
+
+void Game_drawTriangle(Game* self, CoordinateType ctype, int ax, int ay, int bx, int by, int cx, int cy, Color color, bool isSolid) {
+    reinterpret_cast<BWAPI::Game*>(self)->drawTriangle(coordinatetype_to_bw(ctype), ax, ay, bx, by, cx, cy, color_to_bw(color), isSolid);
 }
 
 void Game_drawTriangleMap(Game* self, Position a, Position b, Position c, Color color, bool isSolid) {
@@ -351,6 +402,10 @@ void Game_drawTriangleScreen(Game* self, Position a, Position b, Position c, Col
     reinterpret_cast<BWAPI::Game*>(self)->drawTriangleScreen(position_to_bw(a), position_to_bw(b), position_to_bw(c), color_to_bw(color), isSolid);
 }
 
+void Game_drawCircle(Game* self, CoordinateType ctype, int x, int y, int radius, Color color, bool isSolid) {
+    reinterpret_cast<BWAPI::Game*>(self)->drawCircle(coordinatetype_to_bw(ctype), x, y, radius, color_to_bw(color), isSolid);
+}
+
 void Game_drawCircleMap(Game* self, Position p, int radius, Color color, bool isSolid) {
     return reinterpret_cast<BWAPI::Game*>(self)->drawCircleMap(position_to_bw(p), radius, color_to_bw(color), isSolid);
 }
@@ -361,6 +416,10 @@ void Game_drawCircleMouse(Game* self, Position p, int radius, Color color, bool 
 
 void Game_drawCircleScreen(Game* self, Position p, int radius, Color color, bool isSolid) {
     return reinterpret_cast<BWAPI::Game*>(self)->drawCircleScreen(position_to_bw(p), radius, color_to_bw(color), isSolid);
+}
+
+void Game_drawEllipse(Game* self, CoordinateType ctype, int x, int y, int xrad, int yrad, Color color, bool isSolid) {
+    reinterpret_cast<BWAPI::Game*>(self)->drawEllipse(coordinatetype_to_bw(ctype), x, y, xrad, yrad, color_to_bw(color), isSolid);
 }
 
 void Game_drawEllipseMap(Game* self, Position p, int xrad, int yrad, Color color, bool isSolid) {
@@ -375,6 +434,10 @@ void Game_drawEllipseScreen(Game* self, Position p, int xrad, int yrad, Color co
     reinterpret_cast<BWAPI::Game*>(self)->drawEllipseScreen(position_to_bw(p), xrad, yrad, color_to_bw(color), isSolid);
 }
 
+void Game_drawDot(Game* self, CoordinateType ctype, int x, int y, Color color) {
+    reinterpret_cast<BWAPI::Game*>(self)->drawDot(coordinatetype_to_bw(ctype), x, y, color_to_bw(color));
+}
+
 void Game_drawDotMap(Game* self, Position p, Color color) {
     reinterpret_cast<BWAPI::Game*>(self)->drawDotMap(position_to_bw(p), color_to_bw(color));
 }
@@ -385,6 +448,10 @@ void Game_drawDotMouse(Game* self, Position p, Color color) {
 
 void Game_drawDotScreen(Game* self, Position p, Color color) {
     reinterpret_cast<BWAPI::Game*>(self)->drawDotScreen(position_to_bw(p), color_to_bw(color));
+}
+
+void Game_drawLine(Game* self, CoordinateType ctype, int x1, int y1, int x2, int y2, Color color) {
+    reinterpret_cast<BWAPI::Game*>(self)->drawLine(coordinatetype_to_bw(ctype), x1, y1, x2, y2, color_to_bw(color));
 }
 
 void Game_drawLineMap(Game* self, Position a, Position b, Color color) {
@@ -481,6 +548,11 @@ void Game_setCommandOptimizationLevel(Game* self, int level) {
 
 int Game_countdownTimer(Game* self) {
     return reinterpret_cast<BWAPI::Game*>(self)->countdownTimer();
+}
+
+RegionIterator* Game_getAllRegions(Game* self) {
+    const auto regions = reinterpret_cast<BWAPI::Game*>(self)->getAllRegions();
+    return into_iter<RegionIterator>(regions);
 }
 
 Region* Game_getRegionAt(Game* self, Position position) {

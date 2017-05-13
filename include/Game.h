@@ -48,9 +48,10 @@ void Game_enableFlag(Game* self, int flag);
 // TODO Unit getClosestUnit(Position center, const UnitFilter &pred, int radius = 999999);
 // TODO Unit getClosestUnitInRectangle(Position center, const UnitFilter &pred, int left, int top, int right = 999999, int bottom = 999999);
 // TODO Unit getBestUnit(const BestUnitFilter &best, const UnitFilter &pred, Position center = Positions::Origin, int radius = 999999);
-// TODO Error getLastError();
 
-//TODO bool setLastError(BWAPI::Error e = Errors::None);
+Error Game_getLastError(Game* self);
+bool Game_setLastError(Game* self, Error e);
+
 int Game_mapWidth(Game* self);
 int Game_mapHeight(Game* self);
 BwString* Game_mapFileName(Game* self);

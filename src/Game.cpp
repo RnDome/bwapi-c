@@ -13,6 +13,7 @@
 #include "Position.hpp"
 #include "Color.hpp"
 #include "Input.hpp"
+#include "Error.hpp"
 #include "IteratorImpl.hpp"
 
 ForceIterator* Game_getForces(Game* self) {
@@ -139,6 +140,14 @@ bool Game_isFlagEnabled(Game* self, int flag) {
 
 void Game_enableFlag(Game* self, int flag) {
     reinterpret_cast<BWAPI::Game*>(self)->enableFlag(flag);
+}
+
+Error Game_getLastError(Game* self) {
+    return error_from_bw( reinterpret_cast<BWAPI::Game*>(self)->getLastError() );
+}
+
+bool Game_setLastError(Game* self, Error e) {
+    return reinterpret_cast<BWAPI::Game*>(self)->setLastError(error_to_bw(e));
 }
 
 int Game_mapWidth(Game* self) {

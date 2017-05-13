@@ -314,7 +314,7 @@ bool Unit_canCancelConstruction(Unit* self, bool checkCommandibility);
 bool Unit_canCancelAddon(Unit* self, bool checkCommandibility);
 bool Unit_canCancelTrain(Unit* self, bool checkCommandibility);
 bool Unit_canCancelTrainSlot(Unit* self, bool checkCommandibility);
-// TODO bool Unit_canCancelTrainSlot(int slot, bool checkCanIssueCommandType, bool checkCommandibility);
+bool Unit_canCancelTrainSlot_Check(Unit* self, int slot, bool checkCanIssueCommandType, bool checkCommandibility);
 bool Unit_canCancelMorph(Unit* self, bool checkCommandibility);
 bool Unit_canCancelResearch(Unit* self, bool checkCommandibility);
 bool Unit_canCancelUpgrade(Unit* self, bool checkCommandibility);

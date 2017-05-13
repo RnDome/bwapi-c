@@ -1057,6 +1057,10 @@ bool Unit_canCancelTrainSlot(Unit* self, bool checkCommandibility) {
     return reinterpret_cast<BWAPI::Unit>(self)->canCancelTrainSlot(checkCommandibility);
 }
 
+bool Unit_canCancelTrainSlot_Check(Unit* self, int slot, bool checkCanIssueCommandType, bool checkCommandibility) {
+    return reinterpret_cast<BWAPI::Unit>(self)->canCancelTrainSlot(slot, checkCanIssueCommandType, checkCommandibility);
+}
+
 bool Unit_canCancelMorph(Unit* self, bool checkCommandibility) {
     return reinterpret_cast<BWAPI::Unit>(self)->canCancelMorph(checkCommandibility);
 }

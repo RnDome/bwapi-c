@@ -7,8 +7,8 @@ inline BWAPI::Race race_to_bw(Race race) {
     return BWAPI::Race(race.id);
 }
 
-inline Race race_from_bw(BWAPI::Race type) {
+inline Race race_from_bw(BWAPI::Race race) {
     Race self;
-    self.id = type.getID();
+    self.id = race.getID();
     return self;
 }

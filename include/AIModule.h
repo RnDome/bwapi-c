@@ -8,42 +8,23 @@ extern "C" {
 
 typedef struct AIModule
 {
-    typedef void (*onStart_t)(AIModule* self);
-    typedef void (*onEnd_t)(AIModule* self, bool isWinner);
-    typedef void (*onFrame_t)(AIModule* self);
-    typedef void (*onSendText_t)(AIModule* self, const char* text);
-    typedef void (*onReceiveText_t)(AIModule* self, Player* player, const char* text);
-    typedef void (*onPlayerLeft_t)(AIModule* self, Player* player);
-    typedef void (*onNukeDetect_t)(AIModule* self, Position target);
-    typedef void (*onUnitDiscover_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitEvade_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitShow_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitHide_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitCreate_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitDestroy_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitMorph_t)(AIModule* self, Unit* unit);
-    typedef void (*onUnitRenegade_t)(AIModule* self, Unit* unit);
-    typedef void (*onSaveGame_t)(AIModule* self, const char* gameName);
-    typedef void (*onUnitComplete_t)(AIModule* self, Unit* unit);
-
-    onStart_t onStart;
-    onEnd_t onEnd;
-    onFrame_t onFrame;
-    onSendText_t onSendText;
-    onReceiveText_t onReceiveText;
-    onPlayerLeft_t onPlayerLeft;
-    onNukeDetect_t onNukeDetect;
-    onUnitDiscover_t onUnitDiscover;
-    onUnitEvade_t onUnitEvade;
-    onUnitShow_t onUnitShow;
-    onUnitHide_t onUnitHide;
-    onUnitCreate_t onUnitCreate;
-    onUnitDestroy_t onUnitDestroy;
-    onUnitMorph_t onUnitMorph;
-    onUnitRenegade_t onUnitRenegade;
-    onSaveGame_t onSaveGame;
-    onUnitComplete_t onUnitComplete;
-
+    void (*onStart)(struct AIModule* self);
+    void (*onEnd)(struct AIModule* self, bool isWinner);
+    void (*onFrame)(struct AIModule* self);
+    void (*onSendText)(struct AIModule* self, const char* text);
+    void (*onReceiveText)(struct AIModule* self, Player* player, const char* text);
+    void (*onPlayerLeft)(struct AIModule* self, Player* player);
+    void (*onNukeDetect)(struct AIModule* self, Position target);
+    void (*onUnitDiscover)(struct AIModule* self, Unit* unit);
+    void (*onUnitEvade)(struct AIModule* self, Unit* unit);
+    void (*onUnitShow)(struct AIModule* self, Unit* unit);
+    void (*onUnitHide)(struct AIModule* self, Unit* unit);
+    void (*onUnitCreate)(struct AIModule* self, Unit* unit);
+    void (*onUnitDestroy)(struct AIModule* self, Unit* unit);
+    void (*onUnitMorph)(struct AIModule* self, Unit* unit);
+    void (*onUnitRenegade)(struct AIModule* self, Unit* unit);
+    void (*onSaveGame)(struct AIModule* self, const char* gameName);
+    void (*onUnitComplete)(struct AIModule* self, Unit* unit);
 } AIModule;
 
 /* BWAPI::AIModule* */ void* createAIModuleWrapper(AIModule module);

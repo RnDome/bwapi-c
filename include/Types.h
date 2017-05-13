@@ -51,8 +51,13 @@ typedef struct UnitCommand {
 // Custom type to map functions returning std::string
 typedef struct BwString_ BwString;
 
+// Custom type to map functions returning BWAPI::Unitset...
 typedef struct Iterator_ Iterator;
 typedef struct UnitIterator_ UnitIterator;
+typedef struct PlayerIterator_ PlayerIterator;
+typedef struct ForceIterator_ ForceIterator;
+typedef struct BulletIterator_ BulletIterator;
+typedef struct RegionIterator_ RegionIterator;
 
 #ifdef __cplusplus
 } // extern "C"

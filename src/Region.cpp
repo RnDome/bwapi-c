@@ -1,7 +1,9 @@
 #include <Region.h>
 #include <BWAPI/Region.h>
+#include <BWAPI/Regionset.h>
 
 #include "Position.hpp"
+#include "IteratorImpl.hpp"
 
 int Region_getID(Region* self) {
     return reinterpret_cast<BWAPI::Region>(self)->getID();
@@ -25,6 +27,11 @@ int Region_getDefensePriority(Region* self) {
 
 bool Region_isAccessible(Region* self) {
     return reinterpret_cast<BWAPI::Region>(self)->isAccessible();
+}
+
+RegionIterator* Region_getNeighbors(Region* self) {
+    const auto regions = reinterpret_cast<BWAPI::Region>(self)->getNeighbors();
+    return into_iter<RegionIterator>(regions);
 }
 
 int Region_getBoundsLeft(Region* self) {

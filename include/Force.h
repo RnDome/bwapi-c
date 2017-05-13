@@ -8,7 +8,7 @@ extern "C" {
 
 int Force_getID(Force* self);
 BwString* Force_getName(Force* self);
-// TODO virtual Playerset getPlayers() const = 0;
+PlayerIterator* Force_getPlayers(Force* self);
 
 #ifdef __cplusplus
 } // extern "C"

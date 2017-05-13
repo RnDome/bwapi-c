@@ -8,17 +8,17 @@
 extern "C" {
 #endif
 
-// TODO const Forceset& getForces();
-// TODO const Playerset& getPlayers();
-// TODO const Unitset& getAllUnits();
-// TODO const Unitset& getMinerals();
-// TODO const Unitset& getGeysers();
-// TODO const Unitset& getNeutralUnits();
-// TODO const Unitset& getStaticMinerals();
-// TODO const Unitset& getStaticGeysers();
-// TODO const Unitset& getStaticNeutralUnits();
-// TODO const Bulletset& getBullets();
-// TODO const Position::list& getNukeDots();
+ForceIterator* Game_getForces(Game* self);
+PlayerIterator* Game_getPlayers(Game* self);
+UnitIterator* Game_getAllUnits(Game* self);
+UnitIterator* Game_getMinerals(Game* self);
+UnitIterator* Game_getGeysers(Game* self);
+UnitIterator* Game_getNeutralUnits(Game* self);
+UnitIterator* Game_getStaticMinerals(Game* self);
+UnitIterator* Game_getStaticGeysers(Game* self);
+UnitIterator* Game_getStaticNeutralUnits(Game* self);
+BulletIterator* Game_getBullets(Game* self);
+// TODO const Position::list& getNukeDots(Game* self);
 // TODO const std::list< Event >& getEvents();
 Force* Game_getForce(Game* self, int forceID);
 Player* Game_getPlayer(Game* self, int playerID);
@@ -90,18 +90,29 @@ void Game_setLocalSpeed(Game* self, int speed);
 
 //TODO virtual bool issueCommand(const Unitset& units, UnitCommand command);
 
-//TODO virtual const Unitset& getSelectedUnits();
+UnitIterator* Game_getSelectedUnits(Game* self);
+
 Player* Game_self(Game* self);
 Player* Game_enemy(Game* self);
 Player* Game_neutral(Game* self);
 
-// TODO virtual Playerset& allies();
-// TODO virtual Playerset& enemies();
-// TODO virtual Playerset& observers();
+PlayerIterator* Game_allies(Game* self);
+PlayerIterator* Game_enemies(Game* self);
+PlayerIterator* Game_observers(Game* self);
+
 // TODO void setTextSize(Text::Size::Enum size);
 // TODO void vDrawText(CoordinateType::Enum ctype, int x, int y, const char *format, va_list arg);
 // TODO void drawText(CoordinateType::Enum ctype, int x, int y, const char *format, ...);
 // TODO void Game_drawTextMap(Game* self, Position p, const char *format, ...);
+/*
+void Game::drawTextMap(int x, int y, const char *format, ...)
+  {
+    va_list ap;
+    va_start(ap,format);
+    this->vDrawText(BWAPI::CoordinateType::Map, x, y, format, ap);
+    va_end(ap);
+  }
+*/
 // TODO void Game_drawTextMouse(Game* self, Position p, const char *format, ...);
 // TODO void Game_drawTextScreen(Game* self, Position p, const char *format, ...);
 // TODO void drawBox(CoordinateType::Enum ctype, int left, int top, int right, int bottom, Color color, bool isSolid);

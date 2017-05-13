@@ -12,7 +12,7 @@ Position Region_getCenter(Region* self);
 bool Region_isHigherGround(Region* self);
 int Region_getDefensePriority(Region* self);
 bool Region_isAccessible(Region* self);
-//TODO const Regionset &getNeighbors();
+RegionIterator* Region_getNeighbors(Region* self);
 int Region_getBoundsLeft(Region* self);
 int Region_getBoundsTop(Region* self);
 int Region_getBoundsRight(Region* self);

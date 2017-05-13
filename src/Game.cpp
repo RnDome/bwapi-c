@@ -1,6 +1,10 @@
 #include <Game.h>
 #include <BwString.h>
 #include <BWAPI/Game.h>
+#include <BWAPI/Unitset.h>
+#include <BWAPI/Playerset.h>
+#include <BWAPI/Forceset.h>
+#include <BWAPI/Bulletset.h>
 
 #include "GameType.hpp"
 #include "UnitType.hpp"
@@ -9,6 +13,57 @@
 #include "Position.hpp"
 #include "Color.hpp"
 #include "Input.hpp"
+#include "IteratorImpl.hpp"
+
+ForceIterator* Game_getForces(Game* self) {
+    const auto forces = reinterpret_cast<BWAPI::Game*>(self)->getForces();
+    return into_iter<ForceIterator>(forces);
+}
+
+PlayerIterator* Game_getPlayers(Game* self) {
+    const auto players = reinterpret_cast<BWAPI::Game*>(self)->getPlayers();
+    return into_iter<PlayerIterator>(players);
+}
+
+UnitIterator* Game_getAllUnits(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getAllUnits();
+    return into_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getMinerals(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getMinerals();
+    return into_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getGeysers(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getGeysers();
+    return into_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getNeutralUnits(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getNeutralUnits();
+    return into_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getStaticMinerals(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getStaticMinerals();
+    return into_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getStaticGeysers(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getStaticGeysers();
+    return into_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getStaticNeutralUnits(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getStaticNeutralUnits();
+    return into_iter<UnitIterator>(units);
+}
+
+BulletIterator* Game_getBullets(Game* self) {
+    const auto bullets = reinterpret_cast<BWAPI::Game*>(self)->getBullets();
+    return into_iter<BulletIterator>(bullets);
+}
 
 Force* Game_getForce(Game* self, int forceID) {
     return reinterpret_cast<Force*>( reinterpret_cast<BWAPI::Game*>(self)->getForce(forceID) );
@@ -240,6 +295,11 @@ void Game_setLocalSpeed(Game* self, int speed) {
     reinterpret_cast<BWAPI::Game*>(self)->setLocalSpeed(speed);
 }
 
+UnitIterator* Game_getSelectedUnits(Game* self) {
+    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getSelectedUnits();
+    return into_iter<UnitIterator>(units);
+}
+
 Player* Game_self(Game* self) {
     return reinterpret_cast<Player*>( reinterpret_cast<BWAPI::Game*>(self)->self() );
 }
@@ -250,6 +310,21 @@ Player* Game_enemy(Game* self) {
 
 Player* Game_neutral(Game* self) {
     return reinterpret_cast<Player*>( reinterpret_cast<BWAPI::Game*>(self)->neutral() );
+}
+
+PlayerIterator* Game_allies(Game* self) {
+    const auto allies = reinterpret_cast<BWAPI::Game*>(self)->allies();
+    return into_iter<PlayerIterator>(allies);
+}
+
+PlayerIterator* Game_enemies(Game* self) {
+    const auto enemies = reinterpret_cast<BWAPI::Game*>(self)->enemies();
+    return into_iter<PlayerIterator>(enemies);
+}
+
+PlayerIterator* Game_observers(Game* self) {
+    const auto observers = reinterpret_cast<BWAPI::Game*>(self)->observers();
+    return into_iter<PlayerIterator>(observers);
 }
 
 void Game_drawBoxMap(Game* self, Position leftTop, Position rightBottom, Color color, bool isSolid) {

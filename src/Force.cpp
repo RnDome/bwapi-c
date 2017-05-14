@@ -15,6 +15,6 @@ BwString* Force_getName(Force* self) {
 }
 
 PlayerIterator* Force_getPlayers(Force* self) {
-    const auto players = reinterpret_cast<BWAPI::Force>(self)->getPlayers();
-    return into_iter<PlayerIterator>(players);
+    auto&& players = reinterpret_cast<BWAPI::Force>(self)->getPlayers();
+    return into_iter<PlayerIterator>(std::move(players));
 }

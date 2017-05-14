@@ -19,53 +19,53 @@
 #include "IteratorImpl.hpp"
 
 ForceIterator* Game_getForces(Game* self) {
-    const auto forces = reinterpret_cast<BWAPI::Game*>(self)->getForces();
-    return into_iter<ForceIterator>(forces);
+    const auto& forces = reinterpret_cast<BWAPI::Game*>(self)->getForces();
+    return as_iter<ForceIterator>(forces);
 }
 
 PlayerIterator* Game_getPlayers(Game* self) {
-    const auto players = reinterpret_cast<BWAPI::Game*>(self)->getPlayers();
-    return into_iter<PlayerIterator>(players);
-}
-
-UnitIterator* Game_getAllUnits(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getAllUnits();
-    return into_iter<UnitIterator>(units);
-}
-
-UnitIterator* Game_getMinerals(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getMinerals();
-    return into_iter<UnitIterator>(units);
-}
-
-UnitIterator* Game_getGeysers(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getGeysers();
-    return into_iter<UnitIterator>(units);
-}
-
-UnitIterator* Game_getNeutralUnits(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getNeutralUnits();
-    return into_iter<UnitIterator>(units);
-}
-
-UnitIterator* Game_getStaticMinerals(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getStaticMinerals();
-    return into_iter<UnitIterator>(units);
-}
-
-UnitIterator* Game_getStaticGeysers(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getStaticGeysers();
-    return into_iter<UnitIterator>(units);
-}
-
-UnitIterator* Game_getStaticNeutralUnits(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getStaticNeutralUnits();
-    return into_iter<UnitIterator>(units);
+    const auto& players = reinterpret_cast<BWAPI::Game*>(self)->getPlayers();
+    return as_iter<PlayerIterator>(players);
 }
 
 BulletIterator* Game_getBullets(Game* self) {
-    const auto bullets = reinterpret_cast<BWAPI::Game*>(self)->getBullets();
-    return into_iter<BulletIterator>(bullets);
+    const auto& bullets = reinterpret_cast<BWAPI::Game*>(self)->getBullets();
+    return as_iter<BulletIterator>(bullets);
+}
+
+UnitIterator* Game_getAllUnits(Game* self) {
+    const auto& units = reinterpret_cast<BWAPI::Game*>(self)->getAllUnits();
+    return as_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getMinerals(Game* self) {
+    const auto& minerals = reinterpret_cast<BWAPI::Game*>(self)->getMinerals();
+    return as_iter<UnitIterator>(minerals);
+}
+
+UnitIterator* Game_getGeysers(Game* self) {
+    const auto& geysers = reinterpret_cast<BWAPI::Game*>(self)->getGeysers();
+    return as_iter<UnitIterator>(geysers);
+}
+
+UnitIterator* Game_getNeutralUnits(Game* self) {
+    const auto& units = reinterpret_cast<BWAPI::Game*>(self)->getNeutralUnits();
+    return as_iter<UnitIterator>(units);
+}
+
+UnitIterator* Game_getStaticMinerals(Game* self) {
+    const auto& minerals = reinterpret_cast<BWAPI::Game*>(self)->getStaticMinerals();
+    return as_iter<UnitIterator>(minerals);
+}
+
+UnitIterator* Game_getStaticGeysers(Game* self) {
+    const auto& geysers = reinterpret_cast<BWAPI::Game*>(self)->getStaticGeysers();
+    return as_iter<UnitIterator>(geysers);
+}
+
+UnitIterator* Game_getStaticNeutralUnits(Game* self) {
+    const auto& units = reinterpret_cast<BWAPI::Game*>(self)->getStaticNeutralUnits();
+    return as_iter<UnitIterator>(units);
 }
 
 Force* Game_getForce(Game* self, int forceID) {
@@ -307,8 +307,8 @@ void Game_setLocalSpeed(Game* self, int speed) {
 }
 
 UnitIterator* Game_getSelectedUnits(Game* self) {
-    const auto units = reinterpret_cast<BWAPI::Game*>(self)->getSelectedUnits();
-    return into_iter<UnitIterator>(units);
+    const auto& units = reinterpret_cast<BWAPI::Game*>(self)->getSelectedUnits();
+    return as_iter<UnitIterator>(units);
 }
 
 Player* Game_self(Game* self) {
@@ -324,18 +324,18 @@ Player* Game_neutral(Game* self) {
 }
 
 PlayerIterator* Game_allies(Game* self) {
-    const auto allies = reinterpret_cast<BWAPI::Game*>(self)->allies();
-    return into_iter<PlayerIterator>(allies);
+    const auto& allies = reinterpret_cast<BWAPI::Game*>(self)->allies();
+    return as_iter<PlayerIterator>(allies);
 }
 
 PlayerIterator* Game_enemies(Game* self) {
-    const auto enemies = reinterpret_cast<BWAPI::Game*>(self)->enemies();
-    return into_iter<PlayerIterator>(enemies);
+    const auto& enemies = reinterpret_cast<BWAPI::Game*>(self)->enemies();
+    return as_iter<PlayerIterator>(enemies);
 }
 
 PlayerIterator* Game_observers(Game* self) {
-    const auto observers = reinterpret_cast<BWAPI::Game*>(self)->observers();
-    return into_iter<PlayerIterator>(observers);
+    const auto& observers = reinterpret_cast<BWAPI::Game*>(self)->observers();
+    return as_iter<PlayerIterator>(observers);
 }
 
 void Game_vDrawText(Game* self, CoordinateType ctype, int x, int y, const char* format, va_list args) {
@@ -551,8 +551,8 @@ int Game_countdownTimer(Game* self) {
 }
 
 RegionIterator* Game_getAllRegions(Game* self) {
-    const auto regions = reinterpret_cast<BWAPI::Game*>(self)->getAllRegions();
-    return into_iter<RegionIterator>(regions);
+    const auto& regions = reinterpret_cast<BWAPI::Game*>(self)->getAllRegions();
+    return as_iter<RegionIterator>(regions);
 }
 
 Region* Game_getRegionAt(Game* self, Position position) {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <Iterator.h>
 
 // FIXME Probbaly there is something similar in the BWAPI
@@ -30,24 +31,50 @@ public:
     typedef typename Container::const_iterator Iter;
 
     OwningIterator(Container container)
-        : container(container), iter(container.begin())
+        : container_(std::move(container)), iter(container_.begin())
     {
         static_assert(type != itUnknown, "Iterator type must be valid");
     }
 
     virtual IteratorType id() const override { return type; }
-    virtual bool valid() const override { return iter != container.end(); }
+    virtual bool valid() const override { return iter != container_.end(); }
     virtual const void* get() const override { return &*iter; }
 
     virtual void next() override {
-        if (iter != container.end())
+        if (iter != container_.end())
             ++iter;
     }
 
 private:
-    Container container;
+    Container container_;
     Iter iter;
 };
+
+template<class Container, IteratorType type>
+class BorrowingIterator : public IteratorBase {
+public:
+    typedef typename Container::const_iterator Iter;
+
+    BorrowingIterator(const Container& container)
+        : container_(container), iter(container_.begin())
+    {
+        static_assert(type != itUnknown, "Iterator type must be valid");
+    }
+
+    virtual IteratorType id() const override { return type; }
+    virtual bool valid() const override { return iter != container_.end(); }
+    virtual const void* get() const override { return &*iter; }
+
+    virtual void next() override {
+        if (iter != container_.end())
+            ++iter;
+    }
+
+private:
+    const Container& container_;
+    Iter iter;
+};
+
 
 template<class T> struct GetIterType {
     enum { value = itUnknown };
@@ -78,6 +105,15 @@ Out* into_iter(Container container) {
     const auto type = static_cast<IteratorType>(GetIterType<Out>::value);
     static_assert(type != itUnknown, "Out must be registered, see GetIterType<T>");
 
-    IteratorBase* const iter = new OwningIterator<Container, type>(container);
+    IteratorBase* const iter = new OwningIterator<Container, type>(std::move(container));
+    return reinterpret_cast<Out*>(iter);
+}
+
+template<class Out, class Container>
+Out* as_iter(const Container& container) {
+    const auto type = static_cast<IteratorType>(GetIterType<Out>::value);
+    static_assert(type != itUnknown, "Out must be registered, see GetIterType<T>");
+
+    IteratorBase* const iter = new BorrowingIterator<Container, type>(container);
     return reinterpret_cast<Out*>(iter);
 }

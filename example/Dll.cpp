@@ -15,15 +15,22 @@ namespace BWAPI {
 
 static Game* Broodwar;
 
-void onStart(AIModule* self) {
-    Game_sendText(Broodwar, "Hello from AIModule!");
-}
+typedef struct ExampleAIModule
+{
+    const AIModule_vtable* vtable_;
 
-void onEnd(AIModule* self, bool isWinner) {
+    const char* name;
+} ExampleModule;
+
+void onStart(AIModule* self) {
+    ExampleModule* module = reinterpret_cast<ExampleModule*>( self );
+    Game_sendText(Broodwar, "Hello from AIModule!");
+    Game_sendText(Broodwar, "My name is %s", module->name);
+}
+void onEnd(AIModule* module, bool isWinner) {
     Game_sendText(Broodwar, "Game ended");
 }
-
-void onFrame(AIModule* self) {
+void onFrame(AIModule* module) {
     Iterator* const iter = reinterpret_cast<Iterator*>(Game_getAllUnits(Broodwar));
     assert(iter);
 
@@ -38,22 +45,40 @@ void onFrame(AIModule* self) {
 
     Iterator_release(iter);
 }
+void onSendText(AIModule* module, const char* text) {}
+void onReceiveText(AIModule* module, Player* player, const char* text) {}
+void onPlayerLeft(AIModule* module, Player* player) {}
+void onNukeDetect(AIModule* module, Position target) {}
+void onUnitDiscover(AIModule* module, Unit* unit) {}
+void onUnitEvade(AIModule* module, Unit* unit) {}
+void onUnitShow(AIModule* module, Unit* unit) {}
+void onUnitHide(AIModule* module, Unit* unit) {}
+void onUnitCreate(AIModule* module, Unit* unit) {}
+void onUnitDestroy(AIModule* module, Unit* unit) {}
+void onUnitMorph(AIModule* module, Unit* unit) {}
+void onUnitRenegade(AIModule* module, Unit* unit) {}
+void onSaveGame(AIModule* module, const char* gameName) {}
+void onUnitComplete(AIModule* module, Unit* unit) {}
 
-void onSendText(AIModule* self, const char* text) {}
-void onReceiveText(AIModule* self, Player* player, const char* text) {}
-void onPlayerLeft(AIModule* self, Player* player) {}
-void onNukeDetect(AIModule* self, Position target) {}
-void onUnitDiscover(AIModule* self, Unit* unit) {}
-void onUnitEvade(AIModule* self, Unit* unit) {}
-void onUnitShow(AIModule* self, Unit* unit) {}
-void onUnitHide(AIModule* self, Unit* unit) {}
-void onUnitCreate(AIModule* self, Unit* unit) {}
-void onUnitDestroy(AIModule* self, Unit* unit) {}
-void onUnitMorph(AIModule* self, Unit* unit) {}
-void onUnitRenegade(AIModule* self, Unit* unit) {}
-void onSaveGame(AIModule* self, const char* gameName) {}
-void onUnitComplete(AIModule* self, Unit* unit) {}
-
+static AIModule_vtable module_vtable = {
+    onStart,
+    onEnd,
+    onFrame,
+    onSendText,
+    onReceiveText,
+    onPlayerLeft,
+    onNukeDetect,
+    onUnitDiscover,
+    onUnitEvade,
+    onUnitShow,
+    onUnitHide,
+    onUnitCreate,
+    onUnitDestroy,
+    onUnitMorph,
+    onUnitRenegade,
+    onSaveGame,
+    onUnitComplete
+};
 
 extern "C"
 {
@@ -61,26 +86,11 @@ extern "C"
         Broodwar = reinterpret_cast<Game*>(BroodwarPtr);
     }
     __declspec(dllexport) BWAPI::AIModule* newAIModule() {
-        AIModule module;
-        module.onStart = onStart;
-        module.onEnd = onEnd;
-        module.onFrame = onFrame;
-        module.onSendText = onSendText;
-        module.onReceiveText = onReceiveText;
-        module.onPlayerLeft = onPlayerLeft;
-        module.onNukeDetect = onNukeDetect;
-        module.onUnitDiscover = onUnitDiscover;
-        module.onUnitEvade = onUnitEvade;
-        module.onUnitShow = onUnitShow;
-        module.onUnitHide = onUnitHide;
-        module.onUnitCreate = onUnitCreate;
-        module.onUnitDestroy = onUnitDestroy;
-        module.onUnitMorph = onUnitMorph;
-        module.onUnitRenegade = onUnitRenegade;
-        module.onSaveGame = onSaveGame;
-        module.onUnitComplete = onUnitComplete;
+        ExampleModule module;
+        module.name = "ExampleModule";
+        module.vtable_ = &module_vtable;
 
-        return reinterpret_cast<BWAPI::AIModule*>( createAIModuleWrapper(module) );
+        return reinterpret_cast<BWAPI::AIModule*>( createAIModuleWrapper(reinterpret_cast<AIModule*>(&module), sizeof(module)) );
     }
 }
 

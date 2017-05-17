@@ -21,7 +21,7 @@ public:
     virtual IteratorType id() const = 0;
 
     virtual bool valid() const = 0;
-    virtual const void* get() const = 0;
+    virtual void* get() const = 0;
     virtual void next() = 0;
 };
 
@@ -38,7 +38,7 @@ public:
 
     virtual IteratorType id() const override { return type; }
     virtual bool valid() const override { return iter != container_.end(); }
-    virtual const void* get() const override { return &*iter; }
+    virtual void* get() const override { return *iter; }
 
     virtual void next() override {
         if (iter != container_.end())
@@ -63,7 +63,7 @@ public:
 
     virtual IteratorType id() const override { return type; }
     virtual bool valid() const override { return iter != container_.end(); }
-    virtual const void* get() const override { return &*iter; }
+    virtual void* get() const override { return *iter; }
 
     virtual void next() override {
         if (iter != container_.end())

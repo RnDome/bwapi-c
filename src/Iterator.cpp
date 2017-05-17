@@ -11,7 +11,7 @@ bool Iterator_valid(const Iterator* self) {
     return reinterpret_cast<const IteratorBase*>(self)->valid();
 }
 
-const void* Iterator_get(const Iterator* self) {
+void* Iterator_get(const Iterator* self) {
     assert(self);
     return reinterpret_cast<const IteratorBase*>(self)->get();
 }

@@ -6,28 +6,69 @@
 extern "C" {
 #endif
 
-typedef struct AIModule
-{
-    void (*onStart)(struct AIModule* self);
-    void (*onEnd)(struct AIModule* self, bool isWinner);
-    void (*onFrame)(struct AIModule* self);
-    void (*onSendText)(struct AIModule* self, const char* text);
-    void (*onReceiveText)(struct AIModule* self, Player* player, const char* text);
-    void (*onPlayerLeft)(struct AIModule* self, Player* player);
-    void (*onNukeDetect)(struct AIModule* self, Position target);
-    void (*onUnitDiscover)(struct AIModule* self, Unit* unit);
-    void (*onUnitEvade)(struct AIModule* self, Unit* unit);
-    void (*onUnitShow)(struct AIModule* self, Unit* unit);
-    void (*onUnitHide)(struct AIModule* self, Unit* unit);
-    void (*onUnitCreate)(struct AIModule* self, Unit* unit);
-    void (*onUnitDestroy)(struct AIModule* self, Unit* unit);
-    void (*onUnitMorph)(struct AIModule* self, Unit* unit);
-    void (*onUnitRenegade)(struct AIModule* self, Unit* unit);
-    void (*onSaveGame)(struct AIModule* self, const char* gameName);
-    void (*onUnitComplete)(struct AIModule* self, Unit* unit);
+/// Declare your own module:
+///
+/// typedef struct MyModule {
+///  const AIModule_vtable* vtable_;
+///  int my_field;
+///  ...
+/// };
+///
+/// Create vtable:
+///
+/// void onStart(AIModule*) { }
+/// static AIModule_vtable my_vtable = { onStart, pointer to functions... };
+///
+/// Set vtable:
+///
+/// MyModule module;
+/// module.vtable = &my_vtable;
+///
+/// Wrap your module into a BWAPI::AIModule:
+///  /* BWAPI::AIModule* */ void* wrapper_ptr = createAIModuleWrapper(&module, sizeof(module));
+///
+/// createAIModuleWrapper copies your module, so your local variable is free to destroy
+///
+/// Now your wrapper_ptr can be passed inside the game on call to newAIModule from dll
+
+/// NOTE Using MS extension you may derive from AIModule
+/// In MSVC enabled by default;
+/// In gcc: add flag -fms-extensions
+///
+/// Example:
+///  typedef struct MyModule {
+///   truct AIModule; // base
+///   int my_field;
+///   ...
+///  } MyModule;
+
+typedef struct AIModule_vtable AIModule_vtable;
+typedef struct AIModule {
+    const AIModule_vtable* vtable;
 } AIModule;
 
-/* BWAPI::AIModule* */ void* createAIModuleWrapper(AIModule module);
+struct AIModule_vtable
+{
+    void (*onStart)(AIModule* module);
+    void (*onEnd)(AIModule* module, bool isWinner);
+    void (*onFrame)(AIModule* module);
+    void (*onSendText)(AIModule* module, const char* text);
+    void (*onReceiveText)(AIModule* module, Player* player, const char* text);
+    void (*onPlayerLeft)(AIModule* module, Player* player);
+    void (*onNukeDetect)(AIModule* module, Position target);
+    void (*onUnitDiscover)(AIModule* module, Unit* unit);
+    void (*onUnitEvade)(AIModule* module, Unit* unit);
+    void (*onUnitShow)(AIModule* module, Unit* unit);
+    void (*onUnitHide)(AIModule* module, Unit* unit);
+    void (*onUnitCreate)(AIModule* module, Unit* unit);
+    void (*onUnitDestroy)(AIModule* module, Unit* unit);
+    void (*onUnitMorph)(AIModule* module, Unit* unit);
+    void (*onUnitRenegade)(AIModule* module, Unit* unit);
+    void (*onSaveGame)(AIModule* module, const char* gameName);
+    void (*onUnitComplete)(AIModule* module, Unit* unit);
+};
+
+/* BWAPI::AIModule* */ void* createAIModuleWrapper(AIModule* module, size_t module_size);
 void destroyAIModuleWrapper(/* BWAPI::AIModule* */ void* module);
 
 #ifdef __cplusplus

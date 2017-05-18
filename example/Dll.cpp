@@ -7,6 +7,7 @@
 #include <Game.h>
 #include <Iterator.h>
 #include <Unit.h>
+#include <Player.h>
 
 namespace BWAPI {
     class Game;
@@ -30,20 +31,68 @@ void onStart(AIModule* self) {
 void onEnd(AIModule* module, bool isWinner) {
     Game_sendText(Broodwar, "Game ended");
 }
-void onFrame(AIModule* module) {
-    Iterator* const iter = reinterpret_cast<Iterator*>(Game_getAllUnits(Broodwar));
-    assert(iter);
 
-    for (; Iterator_valid(iter); Iterator_next(iter)) {
-        Unit* const unit = reinterpret_cast<Unit*>(Iterator_get(iter));
+void onFrame(AIModule* self) {
+    const int frame_count = Game_getFrameCount(Broodwar);
+    Game_drawText(Broodwar, CoordinateType {0}, 10, 10, "Frame %d", frame_count);
+
+    Player* const ai = Game_self(Broodwar);
+
+    Iterator* const units = reinterpret_cast<Iterator*>(Player_getUnits(ai));
+    assert(units);
+
+    for (; Iterator_valid(units); Iterator_next(units)) {
+        Unit* const unit = reinterpret_cast<Unit*>(Iterator_get(units));
         assert(unit);
 
-        const int id = Unit_getID(unit);
-        const Position position = Unit_getPosition(unit);
-        Game_sendText(Broodwar, "Unit %d x: %d, y: %d", id, position.x, position.y);
+        const UnitType type = Unit_getType(unit);
+
+        switch (type.id) {
+            case 7:  // SCV
+            case 41: // Drone
+            case 64: // Probe
+                if (Unit_isIdle(unit)) {
+                    if (Unit_isCarryingGas(unit) || Unit_isCarryingMinerals(unit)) {
+                        Unit_returnCargo(unit, false);
+                    } else {
+                        Iterator* const minerals = reinterpret_cast<Iterator*>(Game_getMinerals(Broodwar));
+                        assert(minerals);
+
+                        Unit* closest_mineral = nullptr;
+                        for (; Iterator_valid(minerals); Iterator_next(minerals)) {
+                            Unit* const mineral = reinterpret_cast<Unit*>(Iterator_get(minerals));
+                            assert(mineral);
+
+                            if (!closest_mineral || Unit_getDistance_Unit(unit, mineral) < Unit_getDistance_Unit(unit, closest_mineral))
+                                closest_mineral = mineral;
+                        }
+
+                        if (closest_mineral)
+                            Unit_rightClick_Unit(unit, closest_mineral, false);
+
+                        Iterator_release(minerals);
+                    }
+                }
+                break;
+
+            case 106: // Terran_Command_Center
+                Unit_train(unit, UnitType{7}); // SCV
+                break;
+
+            case 154: // Protoss_Nexus
+                Unit_train(unit, UnitType{64}); // Probe
+                break;
+
+            case 131: // Zerg_Hatchery
+            case 132: // Zerg_Lair
+            case 133: // Zerg_Hive
+                Unit_train(unit, UnitType{41}); // Drone
+                break;
+
+        }
     }
 
-    Iterator_release(iter);
+    Iterator_release(units);
 }
 void onSendText(AIModule* module, const char* text) {}
 void onReceiveText(AIModule* module, Player* player, const char* text) {}

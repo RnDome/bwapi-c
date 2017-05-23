@@ -25,9 +25,9 @@ extern "C" {
 /// module.vtable = &my_vtable;
 ///
 /// Wrap your module into a BWAPI::AIModule:
-///  /* BWAPI::AIModule* */ void* wrapper_ptr = createAIModuleWrapper(&module, sizeof(module));
+///  /* BWAPI::AIModule* */ void* wrapper_ptr = createAIModuleWrapper(&module);
 ///
-/// createAIModuleWrapper copies your module, so your local variable is free to destroy
+/// createAIModuleWrapper does not own your module
 ///
 /// Now your wrapper_ptr can be passed inside the game on call to newAIModule from dll
 
@@ -68,7 +68,7 @@ struct AIModule_vtable
     void (*onUnitComplete)(AIModule* module, Unit* unit);
 };
 
-/* BWAPI::AIModule* */ void* createAIModuleWrapper(AIModule* module, size_t module_size);
+/* BWAPI::AIModule* */ void* createAIModuleWrapper(AIModule* module);
 void destroyAIModuleWrapper(/* BWAPI::AIModule* */ void* module);
 
 #ifdef __cplusplus

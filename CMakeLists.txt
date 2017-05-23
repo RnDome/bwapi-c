@@ -24,7 +24,7 @@ target_include_directories(BWAPIC SYSTEM PUBLIC include/ ${BWAPI_INCLUDE_DIRS})
 target_link_libraries(BWAPIC PRIVATE BWAPI)
 
 if (MSVC)
-    add_library(ExampleDLL MODULE "${CMAKE_SOURCE_DIR}/example/Dll.cpp")
+    add_library(ExampleDLL MODULE "${CMAKE_SOURCE_DIR}/example/Dll.c")
     target_link_libraries(ExampleDLL BWAPIC)
 endif()
 

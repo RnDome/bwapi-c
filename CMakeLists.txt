@@ -30,5 +30,8 @@ endif()
 
 install(DIRECTORY include/ DESTINATION include)
 install(TARGETS BWAPIC DESTINATION lib)
+install(FILES ${BWAPI_LIB_DEBUG} DESTINATION lib CONFIGURATIONS Debug)
+install(FILES ${BWAPI_LIB_RELEASE} DESTINATION lib CONFIGURATIONS Release RelWithDebInfo MinSizeRel)
+
 set(CPACK_GENERATOR "ZIP")
 include(CPack)

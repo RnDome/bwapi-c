@@ -1,33 +1,31 @@
 #include <BwString.h>
 
-#include <stdlib.h>
-#include <string.h>
+#include <string>
+#include <assert.h>
 
 struct BwString_ {
-    char* data;
-    size_t length;
+    std::string data;
 };
 
-BwString* BwString_new(const char* data, size_t len) {
-    BwString* self = new BwString();
-    self->length = len;
+BwString* BwString_new(const char* data, int len) {
+    assert(data);
 
-    self->data = new char[len + 1 /* terminating \0 */];
-    memmove(self->data, data, len);
-    self->data[len] = '\0';
-
+    BwString* const self = new BwString();
+    self->data.assign(data, len);
     return self;
 }
 
-char* BwString_data(BwString* self) {
-    return self->data;
+const char* BwString_data(const BwString* self) {
+    assert(self);
+    return self->data.c_str();
 }
 
-size_t BwString_len(BwString* self) {
-    return self->length;
+int BwString_len(const BwString* self) {
+    assert(self);
+    return self->data.length();
 }
 
 void BwString_release(BwString* self) {
-    delete[] self->data;
+    assert(self);
     delete self;
 }

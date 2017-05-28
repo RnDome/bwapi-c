@@ -20,12 +20,18 @@ bwapi-c/build $ make
 `BWAPI_PATH` must point to directory with BWAPI release.
 
 # Usage on Linux
-You should get `BWAPIC.lib` that was build on Windows with MSVC. See [AppVeyor build artifacts](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master).
+You should get `BWAPIC.lib` and `BWAPIC.dll` that was build on Windows with MSVC. See [AppVeyor build artifacts](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master).
 
 ```
 ~/bwapi-c/example $ ls
-BWAPIC.lib  Dll.cpp
-~/bwapi-c/example $ i686-w64-mingw32-g++ -std=c++11 -mabi=ms -shared -o Dll.dll Dll.cpp -I../include -L. -lBWAPIC
+BWAPIC.lib  Dll.c
+~/bwapi-c/example $ i686-w64-mingw32-gcc -mabi=ms -shared -o Dll.dll Dll.c -I../include -L. -lBWAPIC
 ~/bwapi-c/example $ ls
 BWAPIC.lib  Dll.cpp  Dll.dll
+```
+
+Put `BWAPIC.dll` inside `StarCraft` directory and `Dll.dll` inside `StarCraft/bwapi-data`.
+Set up `bwapi.ini` (`ai=bwapi-data/Dll.dll`) and run:
+```
+wine bwheadless.exe -e StarCraft.exe -l bwapi-data/BWAPI.dll --headful
 ```

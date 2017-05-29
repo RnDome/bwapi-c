@@ -20,7 +20,7 @@ bwapi-c/build $ make
 `BWAPI_PATH` must point to directory with BWAPI release.
 
 # Usage on Linux
-You should get `BWAPIC.lib` and `BWAPIC.dll` that was build on Windows with MSVC. See [AppVeyor build artifacts](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master).
+You should get `BWAPIC.lib` and `BWAPIC.dll` that was build on Windows with MSVC. See [Releases](https://github.com/RnDome/bwapi-c/releases).
 
 ```
 ~/bwapi-c/example $ ls

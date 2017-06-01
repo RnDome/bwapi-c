@@ -33,8 +33,11 @@ target_link_libraries(BWAPIC PRIVATE BWAPI BWAPIClient)
 # Examples
 
 if (MSVC)
-    add_library(ExampleDLL MODULE "${CMAKE_SOURCE_DIR}/example/Dll.c")
-    target_link_libraries(ExampleDLL BWAPIC)
+    add_library(ExampleDll MODULE example/Dll.c)
+    target_link_libraries(ExampleDll BWAPIC)
+
+    add_executable(ExampleClient example/Client.c)
+    target_link_libraries(ExampleClient BWAPIC)
 endif()
 
 # Installation

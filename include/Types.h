@@ -61,6 +61,16 @@ typedef struct ForceIterator_ ForceIterator;
 typedef struct BulletIterator_ BulletIterator;
 typedef struct RegionIterator_ RegionIterator;
 
+// Filter types. Implement filters on your own
+
+// A unit is passed into this filter
+// The filter should return true if the unit satisfies all conditions
+typedef bool (*UnaryUnitFilter)(Unit* unit);
+
+// Two units are passed into this filter
+// The filter should return the best of them
+typedef Unit* (*BestUnitFilter)(Unit* left, Unit* right);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

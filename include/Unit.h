@@ -93,9 +93,9 @@ Unit* Unit_getCarrier(Unit* self);
 UnitIterator* Unit_getInterceptors(Unit* self);
 Unit* Unit_getHatchery(Unit* self);
 UnitIterator* Unit_getLarva(Unit* self);
-// TODO Unitset getUnitsInRadius(int radius, const UnitFilter &pred)
-// TODO Unitset getUnitsInWeaponRange(WeaponType weapon, const UnitFilter &pred)
-// TODO Unit* getClosestUnit(const UnitFilter &pred, int radius)
+UnitIterator* Unit_getUnitsInRadius(Unit* self, int radius, UnaryUnitFilter pred);
+UnitIterator* Unit_getUnitsInWeaponRange(Unit* self, WeaponType weapon, UnaryUnitFilter pred);
+Unit* Unit_getClosestUnit(Unit* self, UnaryUnitFilter pred, int radius);
 bool Unit_hasNuke(Unit* self);
 bool Unit_isAccelerating(Unit* self);
 bool Unit_isAttacking(Unit* self);

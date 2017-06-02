@@ -6,6 +6,7 @@
 #include "Order.hpp"
 #include "TechType.hpp"
 #include "UpgradeType.hpp"
+#include "WeaponType.hpp"
 #include "UnitType.hpp"
 #include "UnitCommand.hpp"
 #include "IteratorImpl.hpp"
@@ -319,6 +320,24 @@ Unit* Unit_getHatchery(Unit* self) {
 UnitIterator* Unit_getLarva(Unit* self) {
     auto&& larva = reinterpret_cast<BWAPI::Unit>(self)->getLarva();
     return into_iter<UnitIterator>(std::move(larva));
+}
+
+UnitIterator* Unit_getUnitsInRadius(Unit* self, int radius, UnaryUnitFilter pred) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto&& units = reinterpret_cast<BWAPI::Unit>(self)->getUnitsInRadius(radius, pred_filter);
+    return into_iter<UnitIterator>(std::move(units));
+}
+
+UnitIterator* Unit_getUnitsInWeaponRange(Unit* self, WeaponType weapon, UnaryUnitFilter pred) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto&& units = reinterpret_cast<BWAPI::Unit>(self)->getUnitsInWeaponRange(weapontype_to_bw(weapon), pred_filter);
+    return into_iter<UnitIterator>(std::move(units));
+}
+
+Unit* Unit_getClosestUnit(Unit* self, UnaryUnitFilter pred, int radius) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto unit = reinterpret_cast<BWAPI::Unit>(self)->getClosestUnit(pred_filter, radius);
+    return reinterpret_cast<Unit*>(unit);
 }
 
 bool Unit_hasNuke(Unit* self) {

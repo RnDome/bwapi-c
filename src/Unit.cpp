@@ -219,6 +219,11 @@ UnitType Unit_getBuildType(Unit* self) {
     return unittype_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getBuildType() );
 }
 
+UnitTypeIterator* Unit_getTrainingQueue(Unit* self) {
+    auto&& uts = reinterpret_cast<BWAPI::Unit>(self)->getTrainingQueue();
+    return into_value_iter<UnitTypeIterator>(std::move(uts));
+}
+
 TechType Unit_getTech(Unit* self) {
     return techtype_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getTech() );
 }

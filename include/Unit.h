@@ -66,7 +66,7 @@ int Unit_getStasisTimer(Unit* self);
 int Unit_getStimTimer(Unit* self);
 
 UnitType Unit_getBuildType(Unit* self);
-// TODO UnitType::list getTrainingQueue
+UnitTypeIterator* Unit_getTrainingQueue(Unit* self);
 TechType Unit_getTech(Unit* self);
 UpgradeType Unit_getUpgrade(Unit* self);
 int Unit_getRemainingBuildTime(Unit* self);

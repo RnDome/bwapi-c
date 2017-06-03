@@ -132,7 +132,7 @@ static AIModule_vtable module_vtable = {
 
 __declspec(dllexport) void gameInit(BWAPI_Game* game) {
     Broodwar = (Game*) game;
-    BWAPIC_setBroodwarPtr(Broodwar);
+    BWAPIC_setGame(Broodwar);
 }
 __declspec(dllexport) BWAPI_AIModule* newAIModule() {
     ExampleAIModule* const module = (ExampleAIModule*) malloc( sizeof(ExampleAIModule) );

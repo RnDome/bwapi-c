@@ -8,6 +8,10 @@
 extern "C" {
 #endif
 
+/// Pass pointer from gameInit to initialize BWAPI::BroodwarPtr
+void BWAPIC_setBroodwarPtr(Game* game);
+Game* BWAPIC_getBroodwarPtr();
+
 ForceIterator* Game_getForces(Game* self);
 PlayerIterator* Game_getPlayers(Game* self);
 UnitIterator* Game_getAllUnits(Game* self);

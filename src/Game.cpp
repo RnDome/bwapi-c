@@ -18,6 +18,14 @@
 #include "CoordinateType.hpp"
 #include "IteratorImpl.hpp"
 
+void BWAPIC_setBroodwarPtr(Game* game) {
+    BWAPI::BroodwarPtr = reinterpret_cast<BWAPI::Game*>(game);
+}
+
+Game* BWAPIC_getBroodwarPtr() {
+    return reinterpret_cast<Game*>(BWAPI::BroodwarPtr);
+}
+
 ForceIterator* Game_getForces(Game* self) {
     const auto& forces = reinterpret_cast<BWAPI::Game*>(self)->getForces();
     return as_iter<ForceIterator>(forces);

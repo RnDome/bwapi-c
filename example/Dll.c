@@ -9,6 +9,7 @@
 #include <Iterator.h>
 #include <Unit.h>
 #include <Player.h>
+#include <Event.h>
 
 typedef struct BWAPI_Game BWAPI_Game; // BWAPI::Game
 typedef struct BWAPI_AIModule BWAPI_AIModule; // BWAPI::AIModule
@@ -45,6 +46,47 @@ void onFrame(AIModule* self) {
 
     Player* const ai = Game_self(Broodwar);
 
+    if (true) {
+        // getEvents test
+        Iterator* const events = (Iterator*) Game_getEvents(Broodwar);
+        assert(events);
+        for(; Iterator_valid(events); Iterator_next(events)) {
+            Event* const pEvent = (Event*)Iterator_get(events);
+            const Event e = *pEvent;
+            if (e.type.id != 2) {
+                Game_sendText(Broodwar, "EventType = (%d)", e.type.id);
+                Game_sendText(Broodwar, "Position = (%d,%d)", e.position.x, e.position.y);
+                if (e.player) {
+                    Game_sendText(Broodwar, "Player minerals = %d", Player_minerals(e.player));
+                } else {
+                    Game_sendText(Broodwar, "Player = NULL");
+                }
+                if (e.unit) {
+                    Game_sendText(Broodwar, "Unit id = %d", Unit_getID(e.unit));
+                } else {
+                    Game_sendText(Broodwar, "Unit = NULL");
+                }
+                BwString* txt = Event_getText(pEvent);
+                Game_sendText(Broodwar, "Text = (%s)", BwString_data(txt));
+                BwString_release(txt);
+            }
+        }
+        Iterator_release(events);
+    }
+
+    if (frame_count == 50) {
+        // getStartLocations test
+        Iterator* const positions = (Iterator*) Game_getStartLocations(Broodwar);
+        if (!Iterator_valid(positions)) {
+            Game_sendText(Broodwar, "Start location iterator is empty.");
+        }
+        for(int i = 0; Iterator_valid(positions); Iterator_next(positions), i++) {
+            const TilePosition tp = *(TilePosition*) Iterator_get(positions);
+            Game_sendText(Broodwar, "Start location %d = (%d, %d)", i, tp.x, tp.y);
+        }
+        Iterator_release(positions);
+    }
+
     Iterator* const units = (Iterator*) Player_getUnits(ai);
     assert(units);
 
@@ -76,6 +118,16 @@ void onFrame(AIModule* self) {
             case 106: {// Terran_Command_Center
                 UnitType SCV = {.id = 7 };
                 Unit_train(unit, SCV);
+
+                Iterator* const tqueue = (Iterator*) Unit_getTrainingQueue(unit);
+                assert(tqueue);
+                for (int x = 10, y = 20; Iterator_valid(tqueue); Iterator_next(tqueue), y += 10) {
+                    UnitType* const unittype = (UnitType*) Iterator_get(tqueue);
+                    assert(unittype);
+
+                    Game_drawText(Broodwar, CoordinateType_None, x, y, "UnitType %d", unittype->id);
+                }
+                Iterator_release(tqueue);
             } break;
 
             case 154: { // Protoss_Nexus

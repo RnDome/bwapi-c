@@ -18,11 +18,11 @@
 #include "CoordinateType.hpp"
 #include "IteratorImpl.hpp"
 
-void BWAPIC_setBroodwarPtr(Game* game) {
+void BWAPIC_setGame(Game* game) {
     BWAPI::BroodwarPtr = reinterpret_cast<BWAPI::Game*>(game);
 }
 
-Game* BWAPIC_getBroodwarPtr() {
+Game* BWAPIC_getGame() {
     return reinterpret_cast<Game*>(BWAPI::BroodwarPtr);
 }
 

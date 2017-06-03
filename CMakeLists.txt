@@ -22,24 +22,33 @@ if (NOT BWAPI_PATH)
 endif()
 
 find_package(BWAPI REQUIRED)
-add_library(BWAPI STATIC IMPORTED)
-set_property(TARGET BWAPI PROPERTY IMPORTED_LOCATION ${BWAPI_LIB_RELEASE})
-set_property(TARGET BWAPI PROPERTY IMPORTED_LOCATION_DEBUG ${BWAPI_LIB_DEBUG})
+
+# BWAPIC
 
 file(GLOB_RECURSE BWAPIC_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 add_library(BWAPIC SHARED ${BWAPIC_SRC})
 target_include_directories(BWAPIC SYSTEM PUBLIC include/ ${BWAPI_INCLUDE_DIRS})
-target_link_libraries(BWAPIC PRIVATE BWAPI)
+target_link_libraries(BWAPIC PRIVATE BWAPI BWAPIClient)
+
+# Examples
 
 if (MSVC)
-    add_library(ExampleDLL MODULE "${CMAKE_SOURCE_DIR}/example/Dll.c")
-    target_link_libraries(ExampleDLL BWAPIC)
+    add_library(ExampleDll MODULE example/Dll.c)
+    target_link_libraries(ExampleDll BWAPIC)
+
+    add_executable(ExampleClient example/Client.c)
+    target_link_libraries(ExampleClient BWAPIC)
 endif()
+
+# Installation
 
 install(DIRECTORY include/ DESTINATION include)
 install(TARGETS BWAPIC DESTINATION lib)
+
 install(FILES ${BWAPI_DLL_DEBUG} DESTINATION lib CONFIGURATIONS Debug)
 install(FILES ${BWAPI_DLL_RELEASE} DESTINATION lib CONFIGURATIONS Release RelWithDebInfo MinSizeRel)
+
+# Package
 
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})

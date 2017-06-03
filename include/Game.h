@@ -8,6 +8,10 @@
 extern "C" {
 #endif
 
+/// Pass pointer from gameInit to initialize BWAPI::BroodwarPtr
+void BWAPIC_setBroodwarPtr(Game* game);
+Game* BWAPIC_getBroodwarPtr();
+
 ForceIterator* Game_getForces(Game* self);
 PlayerIterator* Game_getPlayers(Game* self);
 UnitIterator* Game_getAllUnits(Game* self);
@@ -39,12 +43,12 @@ void Game_setScreenPosition(Game* self, Position p);
 void Game_pingMinimap(Game* self, Position p);
 bool Game_isFlagEnabled(Game* self, int flag);
 void Game_enableFlag(Game* self, int flag);
-// TODO Unitset getUnitsOnTile(BWAPI::TilePosition tile, const UnitFilter &pred);
-// TODO Unitset getUnitsInRectangle(BWAPI::Position topLeft, BWAPI::Position bottomRight, const UnitFilter &pred);
-// TODO Unitset getUnitsInRadius(BWAPI::Position center, int radius, const UnitFilter &pred);
-// TODO Unit getClosestUnit(Position center, const UnitFilter &pred, int radius = 999999);
-// TODO Unit getClosestUnitInRectangle(Position center, const UnitFilter &pred, int left, int top, int right = 999999, int bottom = 999999);
-// TODO Unit getBestUnit(const BestUnitFilter &best, const UnitFilter &pred, Position center = Positions::Origin, int radius = 999999);
+UnitIterator* Game_getUnitsOnTile(Game* self, TilePosition tile, UnaryUnitFilter pred);
+UnitIterator* Game_getUnitsInRectangle(Game* self, Position topLeft, Position bottomRight, UnaryUnitFilter pred);
+UnitIterator* Game_getUnitsInRadius(Game* self, Position center, int radius, UnaryUnitFilter pred);
+Unit* Game_getClosestUnit(Game* self, Position center, UnaryUnitFilter pred, int radius);
+Unit* Game_getClosestUnitInRectangle(Game* self, Position center, UnaryUnitFilter pred, int left, int top, int right, int bottom);
+Unit* Game_getBestUnit(Game* self, BestUnitFilter best, UnaryUnitFilter pred, Position center, int radius);
 
 Error Game_getLastError(Game* self);
 bool Game_setLastError(Game* self, Error e);

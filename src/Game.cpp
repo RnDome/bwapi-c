@@ -18,6 +18,14 @@
 #include "CoordinateType.hpp"
 #include "IteratorImpl.hpp"
 
+void BWAPIC_setBroodwarPtr(Game* game) {
+    BWAPI::BroodwarPtr = reinterpret_cast<BWAPI::Game*>(game);
+}
+
+Game* BWAPIC_getBroodwarPtr() {
+    return reinterpret_cast<Game*>(BWAPI::BroodwarPtr);
+}
+
 ForceIterator* Game_getForces(Game* self) {
     const auto& forces = reinterpret_cast<BWAPI::Game*>(self)->getForces();
     return as_iter<ForceIterator>(forces);
@@ -142,6 +150,43 @@ bool Game_isFlagEnabled(Game* self, int flag) {
 
 void Game_enableFlag(Game* self, int flag) {
     reinterpret_cast<BWAPI::Game*>(self)->enableFlag(flag);
+}
+
+UnitIterator* Game_getUnitsOnTile(Game* self, TilePosition tile, UnaryUnitFilter pred) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto&& units = reinterpret_cast<BWAPI::Game*>(self)->getUnitsOnTile(tileposition_to_bw(tile), pred_filter);
+    return into_iter<UnitIterator>(std::move(units));
+}
+
+UnitIterator* Game_getUnitsInRectangle(Game* self, Position topLeft, Position bottomRight, UnaryUnitFilter pred) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto&& units = reinterpret_cast<BWAPI::Game*>(self)->getUnitsInRectangle(position_to_bw(topLeft), position_to_bw(bottomRight), pred_filter);
+    return into_iter<UnitIterator>(std::move(units));
+}
+
+UnitIterator* Game_getUnitsInRadius(Game* self, Position center, int radius, UnaryUnitFilter pred) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto&& units = reinterpret_cast<BWAPI::Game*>(self)->getUnitsInRadius(position_to_bw(center), radius, pred_filter);
+    return into_iter<UnitIterator>(std::move(units));
+}
+
+Unit* Game_getClosestUnit(Game* self, Position center, UnaryUnitFilter pred, int radius) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto unit = reinterpret_cast<BWAPI::Game*>(self)->getClosestUnit(position_to_bw(center), pred_filter, radius);
+    return reinterpret_cast<Unit*>(unit);
+}
+
+Unit* Game_getClosestUnitInRectangle(Game* self, Position center, UnaryUnitFilter pred, int left, int top, int right, int bottom) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto unit = reinterpret_cast<BWAPI::Game*>(self)->getClosestUnitInRectangle(position_to_bw(center), pred_filter, left, top, right, bottom);
+    return reinterpret_cast<Unit*>(unit);
+}
+
+Unit* Game_getBestUnit(Game* self, BestUnitFilter best, UnaryUnitFilter pred, Position center, int radius) {
+    auto best_filter = reinterpret_cast<BWAPI::Unit (*)(BWAPI::Unit, BWAPI::Unit)>(best);
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto unit = reinterpret_cast<BWAPI::Game*>(self)->getBestUnit(best_filter, pred_filter, position_to_bw(center), radius);
+    return reinterpret_cast<Unit*>(unit);
 }
 
 Error Game_getLastError(Game* self) {

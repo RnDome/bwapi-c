@@ -20,7 +20,7 @@ int Region_getBoundsBottom(Region* self);
 Region* Region_getClosestAccessibleRegion(Region* self);
 Region* Region_getClosestInaccessibleRegion(Region* self);
 int Region_getDistance(Region* self, Region* other);
-//TODO Unitset getUnits(const UnitFilter &pred = nullptr) const;
+UnitIterator* Region_getUnits(Region* self, UnaryUnitFilter pred);
 
 #ifdef __cplusplus
 } // extern "C"

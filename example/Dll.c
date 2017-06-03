@@ -31,6 +31,13 @@ void onEnd(AIModule* module, bool isWinner) {
     Game_sendText(Broodwar, "Game ended");
 }
 
+bool isMineralField(Unit* unit) {
+    int type_id = Unit_getType(unit).id;
+    return type_id == 176  // Resource_Mineral_Field
+        || type_id == 177  // Resource_Mineral_Field_Type_2
+        || type_id == 178; // Resource_Mineral_Field_Type_3
+}
+
 void onFrame(AIModule* self) {
     const int frame_count = Game_getFrameCount(Broodwar);
     CoordinateType CoordinateType_None = { .id = 0 };
@@ -45,6 +52,9 @@ void onFrame(AIModule* self) {
         Unit* const unit = (Unit*) Iterator_get(units);
         assert(unit);
 
+        if ( !Unit_exists(unit) )
+            continue;
+
         const UnitType type = Unit_getType(unit);
 
         switch (type.id) {
@@ -55,22 +65,10 @@ void onFrame(AIModule* self) {
                     if (Unit_isCarryingGas(unit) || Unit_isCarryingMinerals(unit)) {
                         Unit_returnCargo(unit, false);
                     } else {
-                        Iterator* const minerals = (Iterator*) Game_getMinerals(Broodwar);
-                        assert(minerals);
-
-                        Unit* closest_mineral = NULL;
-                        for (; Iterator_valid(minerals); Iterator_next(minerals)) {
-                            Unit* const mineral = (Unit*) Iterator_get(minerals);
-                            assert(mineral);
-
-                            if (!closest_mineral || Unit_getDistance_Unit(unit, mineral) < Unit_getDistance_Unit(unit, closest_mineral))
-                                closest_mineral = mineral;
-                        }
+                        Unit* const closest_mineral = Unit_getClosestUnit(unit, &isMineralField, /*radius*/ 999999);
 
                         if (closest_mineral)
                             Unit_rightClick_Unit(unit, closest_mineral, false);
-
-                        Iterator_release(minerals);
                     }
                 }
                 break;
@@ -132,8 +130,9 @@ static AIModule_vtable module_vtable = {
     onUnitComplete
 };
 
-__declspec(dllexport) void gameInit(BWAPI_Game* BroodwarPtr) {
-    Broodwar = (Game*) BroodwarPtr;
+__declspec(dllexport) void gameInit(BWAPI_Game* game) {
+    Broodwar = (Game*) game;
+    BWAPIC_setBroodwarPtr(Broodwar);
 }
 __declspec(dllexport) BWAPI_AIModule* newAIModule() {
     ExampleAIModule* const module = (ExampleAIModule*) malloc( sizeof(ExampleAIModule) );

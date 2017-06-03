@@ -1,6 +1,7 @@
 #include <Region.h>
 #include <BWAPI/Region.h>
 #include <BWAPI/Regionset.h>
+#include <BWAPI/Unitset.h>
 
 #include "Position.hpp"
 #include "IteratorImpl.hpp"
@@ -60,4 +61,10 @@ Region* Region_getClosestInaccessibleRegion(Region* self) {
 
 int Region_getDistance(Region* self, Region* other) {
     return reinterpret_cast<BWAPI::Region>(self)->getDistance(reinterpret_cast<BWAPI::Region>(other));
+}
+
+UnitIterator* Region_getUnits(Region* self, UnaryUnitFilter pred) {
+    auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
+    auto&& units = reinterpret_cast<BWAPI::Region>(self)->getUnits(pred_filter);
+    return into_iter<UnitIterator>(std::move(units));
 }

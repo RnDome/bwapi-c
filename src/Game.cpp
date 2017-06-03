@@ -6,6 +6,7 @@
 #include <BWAPI/Forceset.h>
 #include <BWAPI/Bulletset.h>
 #include <BWAPI/Regionset.h>
+#include <BWAPI/Event.h>
 
 #include "GameType.hpp"
 #include "UnitType.hpp"
@@ -39,6 +40,16 @@ PlayerIterator* Game_getPlayers(Game* self) {
 BulletIterator* Game_getBullets(Game* self) {
     const auto& bullets = reinterpret_cast<BWAPI::Game*>(self)->getBullets();
     return as_iter<BulletIterator>(bullets);
+}
+
+PositionIterator* Game_getNukeDots(Game* self) {
+    const auto& dots = reinterpret_cast<BWAPI::Game*>(self)->getNukeDots();
+    return as_value_iter<PositionIterator>(dots);
+}
+
+EventIterator* Game_getEvents(Game* self) {
+    const auto& events = reinterpret_cast<BWAPI::Game*>(self)->getEvents();
+    return as_value_iter<EventIterator>(events);
 }
 
 UnitIterator* Game_getAllUnits(Game* self) {
@@ -275,6 +286,11 @@ bool Game_canResearch(Game* self, TechType type, Unit* unit, bool checkCanIssueC
 
 bool Game_canUpgrade(Game* self, UpgradeType type, Unit* unit, bool checkCanIssueCommandType) {
     return reinterpret_cast<BWAPI::Game*>(self)->canUpgrade(upgradetype_to_bw(type), reinterpret_cast<BWAPI::Unit>(unit), checkCanIssueCommandType);
+}
+
+TilePositionIterator* Game_getStartLocations(Game* self) {
+    const auto& tiles = reinterpret_cast<BWAPI::Game*>(self)->getStartLocations();
+    return as_value_iter<TilePositionIterator>(tiles);
 }
 
 void Game_printf(Game* self, const char* format, ...) {

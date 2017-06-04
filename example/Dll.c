@@ -53,6 +53,7 @@ void onFrame(AIModule* self) {
         for(; Iterator_valid(events); Iterator_next(events)) {
             Event* const pEvent = (Event*)Iterator_get(events);
             const Event e = *pEvent;
+            // skip spurious MatchFrame events
             if (e.type.id != 2) {
                 Game_sendText(Broodwar, "EventType = (%d)", e.type.id);
                 Game_sendText(Broodwar, "Position = (%d,%d)", e.position.x, e.position.y);

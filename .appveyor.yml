@@ -1,8 +1,10 @@
 os: Visual Studio 2017
-platform: Any CPU
+platform:
+  - x86
+#  - x64 BWAPI is a 32-only project =(
 configuration:
-    - Debug
-    - Release
+  - Debug
+  - Release
 
 clone_depth: 1
 clone_folder: C:\projects\bwapi-c
@@ -16,18 +18,22 @@ branches:
 test: off
 
 artifacts:
-    - path: build\bwapi-c-*.zip
+  - path: build\bwapi-c-*.zip
+
+init:
+  - if "%PLATFORM%"=="x86" set GENERATOR="Visual Studio 15 2017"
+  - if "%PLATFORM%"=="x64" set GENERATOR="Visual Studio 15 2017 Win64"
 
 install:
-    - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
+  - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
 
 before_build:
-    - cmd: mkdir deps
-    - cmd: curl --silent --retry 10 -kLy 5 -o deps/BWAPI_420.7z "https://github.com/bwapi/bwapi/releases/download/v4.2.0/BWAPI_420.7z"
-    - cmd: 7z x -odeps\BWAPI_420 -y deps\BWAPI_420.7z
-    - cmd: mkdir build
-    - cmd: cd build
-    - cmd: cmake .. -G"Visual Studio 15 2017" -DBWAPI_PATH="C:\projects\bwapi-c\deps\BWAPI_420\Release_Binary"
+  - cmd: mkdir deps
+  - cmd: curl --silent --retry 10 -kLy 5 -o deps/BWAPI_420.7z "https://github.com/bwapi/bwapi/releases/download/v4.2.0/BWAPI_420.7z"
+  - cmd: 7z x -odeps\BWAPI_420 -y deps\BWAPI_420.7z
+  - cmd: mkdir build
+  - cmd: cd build
+  - cmd: cmake .. -G%GENERATOR% -DBWAPI_PATH="C:\projects\bwapi-c\deps\BWAPI_420\Release_Binary"
 
 build_script:
-    - cmd: cmake --build . --config %configuration% --target package
+  - cmd: cmake --build . --config %configuration% --target package

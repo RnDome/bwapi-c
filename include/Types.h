@@ -53,13 +53,32 @@ typedef struct UnitCommand {
 // Custom type to map functions returning std::string
 typedef struct BwString_ BwString;
 
+// Types for Game_getEvents
+typedef struct EventType { int id; } EventType;
+
+typedef struct Event {
+    Position  position;
+    // read the field with Event_getText(..) function
+    void*     text;
+    Unit*     unit;
+    Player*   player;
+    EventType type;
+    bool      winner;
+} Event;
+
 // Custom type to map functions returning BWAPI::Unitset...
-typedef struct Iterator_ Iterator;
-typedef struct UnitIterator_ UnitIterator;
+typedef struct Iterator_       Iterator;
+typedef struct UnitIterator_   UnitIterator;
 typedef struct PlayerIterator_ PlayerIterator;
-typedef struct ForceIterator_ ForceIterator;
+typedef struct ForceIterator_  ForceIterator;
 typedef struct BulletIterator_ BulletIterator;
 typedef struct RegionIterator_ RegionIterator;
+
+// Custom type to map functions returning collections of value types
+typedef struct PositionIterator_     PositionIterator;
+typedef struct TilePositionIterator_ TilePositionIterator;
+typedef struct EventIterator_        EventIterator;
+typedef struct UnitTypeIterator_     UnitTypeIterator;
 
 // Filter types. Implement filters on your own
 

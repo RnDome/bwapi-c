@@ -15,6 +15,7 @@ typedef struct Region_ Region;
 typedef struct Force_ Force;
 typedef struct Bullet_ Bullet;
 typedef struct Game_ Game;
+typedef struct Client_ Client;
 
 /// These are value-only structs with no API
 ///  You should implement API on your own

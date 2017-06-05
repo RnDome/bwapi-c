@@ -2,7 +2,6 @@
 #include <BWAPI/Unit.h>
 #include <BWAPI/Unitset.h>
 
-#include "Position.hpp"
 #include "Order.hpp"
 #include "TechType.hpp"
 #include "UpgradeType.hpp"
@@ -32,11 +31,11 @@ UnitType Unit_getType(Unit* self) {
 }
 
 Position Unit_getPosition(Unit* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getPosition() );
 }
 
 TilePosition Unit_getTilePosition(Unit* self) {
-    return tileposition_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getTilePosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getTilePosition() );
 }
 
 double Unit_getAngle(Unit* self) {
@@ -92,7 +91,8 @@ int Unit_getResourceGroup(Unit* self) {
 }
 
 int Unit_getDistance_Position(Unit* self, Position target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->getDistance(position_to_bw(target));
+    // call overloaded getDistance(BWAPI::Position)
+    return reinterpret_cast<BWAPI::Unit>(self)->getDistance(cast_to_bw(target));
 }
 
 int Unit_getDistance_Unit(Unit* self, Unit* target) {
@@ -100,7 +100,7 @@ int Unit_getDistance_Unit(Unit* self, Unit* target) {
 }
 
 bool Unit_hasPath_Position(Unit* self, Position target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->hasPath(position_to_bw(target));
+    return reinterpret_cast<BWAPI::Unit>(self)->hasPath(cast_to_bw(target));
 }
 
 bool Unit_hasPath_Unit(Unit* self, Unit* target) {
@@ -112,7 +112,7 @@ int Unit_getLastCommandFrame(Unit* self) {
 }
 
 UnitCommand Unit_getLastCommand(Unit* self) {
-    return unitcommand_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getLastCommand() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getLastCommand() );
 }
 
 Player* Unit_getLastAttackingPlayer(Unit* self) {
@@ -124,11 +124,11 @@ UnitType Unit_getInitialType(Unit* self) {
 }
 
 Position Unit_getInitialPosition(Unit* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getInitialPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getInitialPosition() );
 }
 
 TilePosition Unit_getInitialTilePosition(Unit* self) {
-    return tileposition_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getInitialTilePosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getInitialTilePosition() );
 }
 
 int Unit_getInitialHitPoints(Unit* self) {
@@ -257,7 +257,7 @@ Unit* Unit_getTarget(Unit* self) {
 }
 
 Position Unit_getTargetPosition(Unit* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getTargetPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getTargetPosition() );
 }
 
 Order Unit_getOrder(Unit* self) {
@@ -273,11 +273,11 @@ Unit* Unit_getOrderTarget(Unit* self) {
 }
 
 Position Unit_getOrderTargetPosition(Unit* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getOrderTargetPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getOrderTargetPosition() );
 }
 
 Position Unit_getRallyPosition(Unit* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getRallyPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getRallyPosition() );
 }
 
 Unit* Unit_getRallyUnit(Unit* self) {
@@ -566,11 +566,11 @@ bool Unit_isTargetable(Unit* self) {
 }
 
 bool Unit_issueCommand(Unit* self, UnitCommand command) {
-    return reinterpret_cast<BWAPI::Unit>(self)->issueCommand(unitcommand_to_bw(command));
+    return reinterpret_cast<BWAPI::Unit>(self)->issueCommand(cast_to_bw(command));
 }
 
 bool Unit_attack_Position(Unit* self, Position target, bool shiftQueueCommand) {
-    return reinterpret_cast<BWAPI::Unit>(self)->attack(position_to_bw(target), shiftQueueCommand);
+    return reinterpret_cast<BWAPI::Unit>(self)->attack(cast_to_bw(target), shiftQueueCommand);
 }
 
 bool Unit_attack_Unit(Unit* self, Unit* target, bool shiftQueueCommand) {
@@ -578,7 +578,7 @@ bool Unit_attack_Unit(Unit* self, Unit* target, bool shiftQueueCommand) {
 }
 
 bool Unit_build(Unit* self, UnitType type, TilePosition target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->build(unittype_to_bw(type), tileposition_to_bw(target));
+    return reinterpret_cast<BWAPI::Unit>(self)->build(unittype_to_bw(type), cast_to_bw(target));
 }
 
 bool Unit_buildAddon(Unit* self, UnitType type) {
@@ -602,7 +602,7 @@ bool Unit_upgrade(Unit* self, UpgradeType upgrade) {
 }
 
 bool Unit_setRallyPoint_Position(Unit* self, Position target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->setRallyPoint(position_to_bw(target));
+    return reinterpret_cast<BWAPI::Unit>(self)->setRallyPoint(cast_to_bw(target));
 }
 
 bool Unit_setRallyPoint_Target(Unit* self, Unit* target) {
@@ -610,11 +610,11 @@ bool Unit_setRallyPoint_Target(Unit* self, Unit* target) {
 }
 
 bool Unit_move(Unit* self, Position target, bool shiftQueueCommand) {
-    return reinterpret_cast<BWAPI::Unit>(self)->move(position_to_bw(target), shiftQueueCommand);
+    return reinterpret_cast<BWAPI::Unit>(self)->move(cast_to_bw(target), shiftQueueCommand);
 }
 
 bool Unit_patrol(Unit* self, Position target, bool shiftQueueCommand) {
-    return reinterpret_cast<BWAPI::Unit>(self)->patrol(position_to_bw(target), shiftQueueCommand);
+    return reinterpret_cast<BWAPI::Unit>(self)->patrol(cast_to_bw(target), shiftQueueCommand);
 }
 
 bool Unit_holdPosition(Unit* self, bool shiftQueueCommand) {
@@ -670,7 +670,7 @@ bool Unit_lift(Unit* self) {
 }
 
 bool Unit_land(Unit* self, TilePosition target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->land(tileposition_to_bw(target));
+    return reinterpret_cast<BWAPI::Unit>(self)->land(cast_to_bw(target));
 }
 
 bool Unit_load(Unit* self, Unit* target, bool shiftQueueCommand) {
@@ -686,11 +686,11 @@ bool Unit_unloadAll(Unit* self, bool shiftQueueCommand) {
 }
 
 bool Unit_unloadAll_Position(Unit* self, Position target, bool shiftQueueCommand) {
-    return reinterpret_cast<BWAPI::Unit>(self)->unloadAll(position_to_bw(target), shiftQueueCommand);
+    return reinterpret_cast<BWAPI::Unit>(self)->unloadAll(cast_to_bw(target), shiftQueueCommand);
 }
 
 bool Unit_rightClick_Position(Unit* self, Position target, bool shiftQueueCommand) {
-    return reinterpret_cast<BWAPI::Unit>(self)->rightClick(position_to_bw(target), shiftQueueCommand);
+    return reinterpret_cast<BWAPI::Unit>(self)->rightClick(cast_to_bw(target), shiftQueueCommand);
 }
 
 bool Unit_rightClick_Unit(Unit* self, Unit* target, bool shiftQueueCommand) {
@@ -726,7 +726,7 @@ bool Unit_cancelUpgrade(Unit* self) {
 }
 
 bool Unit_useTech_Position(Unit* self, TechType tech, Position target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->useTech(techtype_to_bw(tech), position_to_bw(target));
+    return reinterpret_cast<BWAPI::Unit>(self)->useTech(techtype_to_bw(tech), cast_to_bw(target));
 }
 
 bool Unit_useTech_Unit(Unit* self, TechType tech, Unit* target) {
@@ -734,15 +734,15 @@ bool Unit_useTech_Unit(Unit* self, TechType tech, Unit* target) {
 }
 
 bool Unit_placeCOP(Unit* self, TilePosition target) {
-    return reinterpret_cast<BWAPI::Unit>(self)->placeCOP(tileposition_to_bw(target));
+    return reinterpret_cast<BWAPI::Unit>(self)->placeCOP(cast_to_bw(target));
 }
 
 bool Unit_canIssueCommand(Unit* self, UnitCommand command, bool checkCanUseTechPositionOnPositions, bool checkCanUseTechUnitOnUnits, bool checkCanBuildUnitType, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommand(unitcommand_to_bw(command), checkCanUseTechPositionOnPositions, checkCanUseTechUnitOnUnits, checkCanBuildUnitType, checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommand(cast_to_bw(command), checkCanUseTechPositionOnPositions, checkCanUseTechUnitOnUnits, checkCanBuildUnitType, checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canIssueCommandGrouped(Unit* self, UnitCommand command, bool checkCanUseTechPositionOnPositions, bool checkCanUseTechUnitOnUnits, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommandGrouped(unitcommand_to_bw(command), checkCanUseTechPositionOnPositions, checkCanUseTechUnitOnUnits, checkCanTargetUnit, checkCanIssueCommandType, checkCommandibilityGrouped, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommandGrouped(cast_to_bw(command), checkCanUseTechPositionOnPositions, checkCanUseTechUnitOnUnits, checkCanTargetUnit, checkCanIssueCommandType, checkCommandibilityGrouped, checkCommandibility);
 }
 
 bool Unit_canCommand(Unit* self) {
@@ -754,11 +754,11 @@ bool Unit_canCommandGrouped(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canIssueCommandType(Unit* self, UnitCommandType ct, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommandType(unitcommandtype_to_bw(ct), checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommandType(cast_to_bw(ct), checkCommandibility);
 }
 
 bool Unit_canIssueCommandTypeGrouped(Unit* self, UnitCommandType ct, bool checkCommandibilityGrouped, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommandTypeGrouped(unitcommandtype_to_bw(ct), checkCommandibilityGrouped, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canIssueCommandTypeGrouped(cast_to_bw(ct), checkCommandibilityGrouped, checkCommandibility);
 }
 
 bool Unit_canTargetUnit(Unit* self, Unit* targetUnit, bool checkCommandibility) {
@@ -770,7 +770,7 @@ bool Unit_canAttack(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canAttack_Position(Unit* self, Position target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canAttack(position_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canAttack(cast_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canAttack_Unit(Unit* self, Unit* target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
@@ -782,7 +782,7 @@ bool Unit_canAttackGrouped(Unit* self, bool checkCommandibilityGrouped, bool che
 }
 
 bool Unit_canAttackGrouped_Position(Unit* self, Position target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canAttackGrouped(position_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibilityGrouped, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canAttackGrouped(cast_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibilityGrouped, checkCommandibility);
 }
 
 bool Unit_canAttackGrouped_Unit(Unit* self, Unit* target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility) {
@@ -822,7 +822,7 @@ bool Unit_canBuild_UnitType(Unit* self, UnitType uType, bool checkCanIssueComman
 }
 
 bool Unit_canBuild_UnitType_TilePosition(Unit* self, UnitType uType, TilePosition tilePos, bool checkTargetUnitType, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canBuild(unittype_to_bw(uType), tileposition_to_bw(tilePos), checkTargetUnitType, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canBuild(unittype_to_bw(uType), cast_to_bw(tilePos), checkTargetUnitType, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canBuildAddon(Unit* self, bool checkCommandibility) {
@@ -870,7 +870,7 @@ bool Unit_canSetRallyPoint(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canSetRallyPoint_Position(Unit* self, Position target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canSetRallyPoint(position_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canSetRallyPoint(cast_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canSetRallyPoint_Unit(Unit* self, Unit* target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
@@ -974,7 +974,7 @@ bool Unit_canLand(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canLand_TilePosition(Unit* self, TilePosition target, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canLand(tileposition_to_bw(target), checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canLand(cast_to_bw(target), checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canLoad(Unit* self, bool checkCommandibility) {
@@ -990,7 +990,7 @@ bool Unit_canUnloadWithOrWithoutTarget(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canUnloadAtPosition(Unit* self, Position targDropPos, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canUnloadAtPosition(position_to_bw(targDropPos), checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canUnloadAtPosition(cast_to_bw(targDropPos), checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canUnload(Unit* self, bool checkCommandibility) {
@@ -1010,7 +1010,7 @@ bool Unit_canUnloadAllPosition(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canUnloadAllPosition_Position(Unit* self, Position targDropPos, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canUnloadAllPosition(position_to_bw(targDropPos), checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canUnloadAllPosition(cast_to_bw(targDropPos), checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canRightClick(Unit* self, bool checkCommandibility) {
@@ -1018,7 +1018,7 @@ bool Unit_canRightClick(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canRightClick_Position(Unit* self, Position target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canRightClick(position_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canRightClick(cast_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canRightClick_Unit(Unit* self, Unit* target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibility) {
@@ -1030,7 +1030,7 @@ bool Unit_canRightClickGrouped(Unit* self, bool checkCommandibilityGrouped, bool
 }
 
 bool Unit_canRightClickGrouped_Position(Unit* self, Position target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canRightClickGrouped(position_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibilityGrouped, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canRightClickGrouped(cast_to_bw(target), checkCanTargetUnit, checkCanIssueCommandType, checkCommandibilityGrouped, checkCommandibility);
 }
 
 bool Unit_canRightClickGrouped_Unit(Unit* self, Unit* target, bool checkCanTargetUnit, bool checkCanIssueCommandType, bool checkCommandibilityGrouped, bool checkCommandibility) {
@@ -1106,7 +1106,7 @@ bool Unit_canUseTechWithOrWithoutTarget_TechType(Unit* self, TechType tech, bool
 }
 
 bool Unit_canUseTech_Position(Unit* self, TechType tech, Position target, bool checkCanTargetUnit, bool checkTargetsType, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canUseTech(techtype_to_bw(tech), position_to_bw(target), checkCanTargetUnit, checkTargetsType, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canUseTech(techtype_to_bw(tech), cast_to_bw(target), checkCanTargetUnit, checkTargetsType, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canUseTech_Unit(Unit* self, TechType tech, Unit* target, bool checkCanTargetUnit, bool checkTargetsType, bool checkCanIssueCommandType, bool checkCommandibility) {
@@ -1130,7 +1130,7 @@ bool Unit_canUseTechPosition(Unit* self, TechType tech, bool checkCanIssueComman
 }
 
 bool Unit_canUseTechPosition_Position(Unit* self, TechType tech, Position target, bool checkTargetsPositions, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canUseTechPosition(techtype_to_bw(tech), position_to_bw(target), checkTargetsPositions, checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canUseTechPosition(techtype_to_bw(tech), cast_to_bw(target), checkTargetsPositions, checkCanIssueCommandType, checkCommandibility);
 }
 
 bool Unit_canPlaceCOP(Unit* self, bool checkCommandibility) {
@@ -1138,5 +1138,5 @@ bool Unit_canPlaceCOP(Unit* self, bool checkCommandibility) {
 }
 
 bool Unit_canPlaceCOP_TilePosition(Unit* self, TilePosition target, bool checkCanIssueCommandType, bool checkCommandibility) {
-    return reinterpret_cast<BWAPI::Unit>(self)->canPlaceCOP(tileposition_to_bw(target), checkCanIssueCommandType, checkCommandibility);
+    return reinterpret_cast<BWAPI::Unit>(self)->canPlaceCOP(cast_to_bw(target), checkCanIssueCommandType, checkCommandibility);
 }

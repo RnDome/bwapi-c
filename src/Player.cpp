@@ -4,7 +4,6 @@
 #include <BWAPI/Unitset.h>
 
 #include "Color.hpp"
-#include "Position.hpp"
 #include "Race.hpp"
 #include "PlayerType.hpp"
 #include "UnitType.hpp"
@@ -52,7 +51,7 @@ bool Player_isNeutral(Player* self) {
 }
 
 TilePosition Player_getStartLocation(Player* self) {
-    return tileposition_from_bw( reinterpret_cast<BWAPI::Player>(self)->getStartLocation() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Player>(self)->getStartLocation() );
 }
 
 bool Player_isVictorious(Player* self) {

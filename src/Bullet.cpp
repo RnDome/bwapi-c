@@ -1,8 +1,6 @@
 #include <Bullet.h>
 #include <BWAPI/Bullet.h>
-
-#include "BulletType.hpp"
-#include "Position.hpp"
+#include "Cast.hpp"
 
 int Bullet_getID(Bullet* self) {
     return reinterpret_cast<BWAPI::Bullet>(self)->getID();
@@ -17,7 +15,7 @@ Player* Bullet_getPlayer(Bullet* self) {
 }
 
 BulletType Bullet_getType(Bullet* self) {
-    return bullettype_from_bw( reinterpret_cast<BWAPI::Bullet>(self)->getType() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Bullet>(self)->getType() );
 }
 
 Unit* Bullet_getSource(Bullet* self) {
@@ -25,7 +23,7 @@ Unit* Bullet_getSource(Bullet* self) {
 }
 
 Position Bullet_getPosition(Bullet* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Bullet>(self)->getPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Bullet>(self)->getPosition() );
 }
 
 double Bullet_getAngle(Bullet* self) {
@@ -45,7 +43,7 @@ Unit* Bullet_getTarget(Bullet* self) {
 }
 
 Position Bullet_getTargetPosition(Bullet* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Bullet>(self)->getTargetPosition() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Bullet>(self)->getTargetPosition() );
 }
 
 int Bullet_getRemoveTimer(Bullet* self) {

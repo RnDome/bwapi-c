@@ -6,6 +6,9 @@
 #include <BWAPI/UnitType.h>
 #include <BWAPI/Event.h>
 #include <BWAPI/EventType.h>
+#include <BWAPI/BulletType.h>
+#include <BWAPI/UnitCommandType.h>
+#include <BWAPI/Client/UnitCommand.h>
 
 //____________________________________________//
 // Forward conversion :: BW -> TX
@@ -54,11 +57,11 @@ struct Cast<BWAPI::Position, Position> {
     typedef BWAPI::Position BwType;
     typedef Position        TxType;
 
-    static TxType from_bw(BwType bw) {
+    inline static TxType from_bw(BwType bw) {
         return Position {bw.x, bw.y};
     }
-    static BwType to_bw(TxType tx) {
-        return BWAPI::Position {tx.x, tx.y};
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::Position(tx.x, tx.y);
     }
 };
 template<>
@@ -76,11 +79,11 @@ struct Cast<BWAPI::TilePosition, TilePosition> {
     typedef BWAPI::TilePosition BwType;
     typedef TilePosition        TxType;
 
-    static TxType from_bw(BwType bw) {
+    inline static TxType from_bw(BwType bw) {
         return TilePosition {bw.x, bw.y};
     }
-    static BwType to_bw(TxType tx) {
-        return BWAPI::TilePosition {tx.x, tx.y};
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::TilePosition(tx.x, tx.y);
     }
 };
 template<>
@@ -94,6 +97,50 @@ struct CastRev<TilePosition> {
 //----------------------------------------------------
 
 template<>
+struct Cast<BWAPI::WalkPosition, WalkPosition> {
+    typedef BWAPI::WalkPosition BwType;
+    typedef WalkPosition        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return WalkPosition {bw.x, bw.y};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::WalkPosition {tx.x, tx.y};
+    }
+};
+template<>
+struct CastFwd<BWAPI::WalkPosition> {
+    typedef Cast<BWAPI::WalkPosition, WalkPosition> Type;
+};
+template<>
+struct CastRev<WalkPosition> {
+    typedef Cast<BWAPI::WalkPosition, WalkPosition> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::BulletType, BulletType> {
+    typedef BWAPI::BulletType BwType;
+    typedef BulletType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return BulletType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::BulletType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::BulletType> {
+    typedef Cast<BWAPI::BulletType, BulletType> Type;
+};
+template<>
+struct CastRev<BulletType> {
+    typedef Cast<BWAPI::BulletType, BulletType> Type;
+};
+//----------------------------------------------------
+
+template<>
 struct Cast<BWAPI::UnitType, UnitType> {
     typedef BWAPI::UnitType BwType;
     typedef UnitType        TxType;
@@ -102,7 +149,7 @@ struct Cast<BWAPI::UnitType, UnitType> {
         return UnitType {bw.getID()};
     }
     inline static BwType to_bw(TxType tx) {
-        return BWAPI::UnitType {tx.id};
+        return BWAPI::UnitType(tx.id);
     }
 };
 template<>
@@ -121,7 +168,7 @@ struct Cast<BWAPI::EventType::Enum, EventType> {
     typedef EventType              TxType;
 
     inline static TxType from_bw(BwType bw) {
-        return EventType { bw };
+        return EventType {bw};
     }
     inline static BwType to_bw(TxType tx) {
         return BWAPI::EventType::Enum(tx.id);
@@ -134,6 +181,86 @@ struct CastFwd<BWAPI::EventType::Enum> {
 template<>
 struct CastRev<EventType> {
     typedef Cast<BWAPI::EventType::Enum, EventType> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Order, Order> {
+    typedef BWAPI::Order BwType;
+    typedef Order        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return Order {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::Order(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Order> {
+    typedef Cast<BWAPI::Order, Order> Type;
+};
+template<>
+struct CastRev<Order> {
+    typedef Cast<BWAPI::Order, Order> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::UnitCommandType, UnitCommandType> {
+    typedef BWAPI::UnitCommandType BwType;
+    typedef UnitCommandType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return UnitCommandType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::UnitCommandType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::UnitCommandType> {
+    typedef Cast<BWAPI::UnitCommandType, UnitCommandType> Type;
+};
+template<>
+struct CastRev<UnitCommandType> {
+    typedef Cast<BWAPI::UnitCommandType, UnitCommandType> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::UnitCommand, UnitCommand> {
+    typedef BWAPI::UnitCommand BwType;
+    typedef UnitCommand        TxType;
+
+    inline static TxType from_bw(BWAPI::UnitCommand bw) {
+        UnitCommand self;
+        // TODO cast_from_bw
+        self.unit = reinterpret_cast<Unit*>(bw.unit);
+        self.type = cast_from_bw(bw.type);
+        self.target = reinterpret_cast<Unit*>(bw.target);
+        self.x = bw.x;
+        self.y = bw.y;
+        self.extra = bw.extra;
+        return self;
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::UnitCommand(
+            reinterpret_cast<BWAPI::Unit>(tx.unit),
+            cast_to_bw(tx.type),
+            reinterpret_cast<BWAPI::Unit>(tx.target),
+            tx.x,
+            tx.y,
+            tx.extra);
+    }
+};
+template<>
+struct CastFwd<BWAPI::UnitCommand> {
+    typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
+};
+template<>
+struct CastRev<UnitCommand> {
+    typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
 };
 //----------------------------------------------------
 

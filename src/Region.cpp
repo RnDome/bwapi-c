@@ -3,7 +3,6 @@
 #include <BWAPI/Regionset.h>
 #include <BWAPI/Unitset.h>
 
-#include "Position.hpp"
 #include "IteratorImpl.hpp"
 
 int Region_getID(Region* self) {
@@ -15,7 +14,7 @@ int Region_getRegionGroupID(Region* self) {
 }
 
 Position Region_getCenter(Region* self) {
-    return position_from_bw( reinterpret_cast<BWAPI::Region>(self)->getCenter() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Region>(self)->getCenter() );
 }
 
 bool Region_isHigherGround(Region* self) {

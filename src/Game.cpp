@@ -135,11 +135,11 @@ Position Game_getMousePosition(Game* self) {
 }
 
 bool Game_getMouseState(Game* self, MouseButton button) {
-    return reinterpret_cast<BWAPI::Game*>(self)->getMouseState(mousebutton_to_bw(button));
+    return reinterpret_cast<BWAPI::Game*>(self)->getMouseState(cast_to_bw(button));
 }
 
 bool Game_getKeyState(Game* self, KeyButton key) {
-    return reinterpret_cast<BWAPI::Game*>(self)->getKeyState(keybutton_to_bw(key));
+    return reinterpret_cast<BWAPI::Game*>(self)->getKeyState(cast_to_bw(key));
 }
 
 Position Game_getScreenPosition(Game* self) {

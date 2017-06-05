@@ -9,6 +9,7 @@
 #include <BWAPI/BulletType.h>
 #include <BWAPI/UnitCommand.h>
 #include <BWAPI/UnitCommandType.h>
+#include <BWAPI/Input.h>
 
 //____________________________________________//
 // Forward conversion :: BW -> TX
@@ -229,42 +230,6 @@ struct CastRev<UnitCommandType> {
 //----------------------------------------------------
 
 template<>
-struct Cast<BWAPI::UnitCommand, UnitCommand> {
-    typedef BWAPI::UnitCommand BwType;
-    typedef UnitCommand        TxType;
-
-    inline static TxType from_bw(BWAPI::UnitCommand bw) {
-        UnitCommand self;
-        // TODO cast_from_bw
-        self.unit = reinterpret_cast<Unit*>(bw.unit);
-        self.type = cast_from_bw(bw.type);
-        self.target = reinterpret_cast<Unit*>(bw.target);
-        self.x = bw.x;
-        self.y = bw.y;
-        self.extra = bw.extra;
-        return self;
-    }
-    inline static BwType to_bw(TxType tx) {
-        return BWAPI::UnitCommand(
-            reinterpret_cast<BWAPI::Unit>(tx.unit),
-            cast_to_bw(tx.type),
-            reinterpret_cast<BWAPI::Unit>(tx.target),
-            tx.x,
-            tx.y,
-            tx.extra);
-    }
-};
-template<>
-struct CastFwd<BWAPI::UnitCommand> {
-    typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
-};
-template<>
-struct CastRev<UnitCommand> {
-    typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
-};
-//----------------------------------------------------
-
-template<>
 struct Cast<std::string, BwString*> {
     typedef std::string BwType;
     typedef BwString*   TxType;
@@ -295,6 +260,41 @@ template<>
 struct CastRev<Unit*> {
     typedef Cast<BWAPI::Unit, Unit*> Type;
 };
+
+//----------------------------------------------------
+template<>
+struct Cast<BWAPI::UnitCommand, UnitCommand> {
+    typedef BWAPI::UnitCommand BwType;
+    typedef UnitCommand        TxType;
+
+    inline static TxType from_bw(BWAPI::UnitCommand bw) {
+        UnitCommand self;
+        self.unit = cast_from_bw(bw.unit);
+        self.type = cast_from_bw(bw.type);
+        self.target = cast_from_bw(bw.target);
+        self.x = bw.x;
+        self.y = bw.y;
+        self.extra = bw.extra;
+        return self;
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::UnitCommand(
+            cast_to_bw(tx.unit),
+            cast_to_bw(tx.type),
+            cast_to_bw(tx.target),
+            tx.x,
+            tx.y,
+            tx.extra);
+    }
+};
+template<>
+struct CastFwd<BWAPI::UnitCommand> {
+    typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
+};
+template<>
+struct CastRev<UnitCommand> {
+    typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
+};
 //----------------------------------------------------
 
 template<>
@@ -315,6 +315,48 @@ struct CastFwd<BWAPI::Player> {
 template<>
 struct CastRev<Player*> {
     typedef Cast<BWAPI::Player, Player*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Key, KeyButton> {
+    typedef BWAPI::Key BwType;
+    typedef KeyButton  TxType;
+    static TxType from_bw(BwType bw) {
+        return KeyButton {static_cast<int>(bw)};
+    }
+    static BwType to_bw(TxType tx) {
+        return static_cast<BWAPI::Key>(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Key> {
+    typedef Cast<BWAPI::Key, KeyButton> Type;
+};
+template<>
+struct CastRev<KeyButton> {
+    typedef Cast<BWAPI::Key, KeyButton> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::MouseButton, MouseButton> {
+    typedef BWAPI::MouseButton BwType;
+    typedef MouseButton  TxType;
+    static TxType from_bw(BwType bw) {
+        return MouseButton {static_cast<int>(bw)};
+    }
+    static BwType to_bw(TxType tx) {
+        return static_cast<BWAPI::MouseButton>(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::MouseButton> {
+    typedef Cast<BWAPI::MouseButton, MouseButton> Type;
+};
+template<>
+struct CastRev<MouseButton> {
+    typedef Cast<BWAPI::MouseButton, MouseButton> Type;
 };
 //----------------------------------------------------
 

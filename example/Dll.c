@@ -51,8 +51,7 @@ void onFrame(AIModule* self) {
         Iterator* const events = (Iterator*) Game_getEvents(Broodwar);
         assert(events);
         for(; Iterator_valid(events); Iterator_next(events)) {
-            Event* const pEvent = (Event*)Iterator_get(events);
-            const Event e = *pEvent;
+            const Event e = * (Event*)Iterator_get(events);
             if (e.type.id != 2) { // MatchFrame
                 Game_sendText(Broodwar, "EventType = (%d)", e.type.id);
                 Game_sendText(Broodwar, "Position = (%d,%d)", e.position.x, e.position.y);
@@ -66,7 +65,7 @@ void onFrame(AIModule* self) {
                 } else {
                     Game_sendText(Broodwar, "Unit = NULL");
                 }
-                BwString* txt = Event_getText(pEvent);
+                BwString* txt = Event_getText(&e);
                 Game_sendText(Broodwar, "Text = (%s)", BwString_data(txt));
                 BwString_release(txt);
             }

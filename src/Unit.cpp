@@ -261,11 +261,11 @@ Position Unit_getTargetPosition(Unit* self) {
 }
 
 Order Unit_getOrder(Unit* self) {
-    return order_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getOrder() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getOrder() );
 }
 
 Order Unit_getSecondaryOrder(Unit* self) {
-    return order_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getSecondaryOrder() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Unit>(self)->getSecondaryOrder() );
 }
 
 Unit* Unit_getOrderTarget(Unit* self) {
@@ -335,7 +335,7 @@ UnitIterator* Unit_getUnitsInRadius(Unit* self, int radius, UnaryUnitFilter pred
 
 UnitIterator* Unit_getUnitsInWeaponRange(Unit* self, WeaponType weapon, UnaryUnitFilter pred) {
     auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
-    auto&& units = reinterpret_cast<BWAPI::Unit>(self)->getUnitsInWeaponRange(weapontype_to_bw(weapon), pred_filter);
+    auto&& units = reinterpret_cast<BWAPI::Unit>(self)->getUnitsInWeaponRange(cast_to_bw(weapon), pred_filter);
     return into_iter<UnitIterator>(std::move(units));
 }
 

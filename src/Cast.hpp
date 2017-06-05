@@ -9,7 +9,9 @@
 #include <BWAPI/BulletType.h>
 #include <BWAPI/UnitCommand.h>
 #include <BWAPI/UnitCommandType.h>
+#include <BWAPI/Order.h>
 #include <BWAPI/Input.h>
+#include <BWAPI/WeaponType.h>
 
 //____________________________________________//
 // Forward conversion :: BW -> TX
@@ -316,6 +318,29 @@ template<>
 struct CastRev<Player*> {
     typedef Cast<BWAPI::Player, Player*> Type;
 };
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::WeaponType, WeaponType> {
+    typedef BWAPI::WeaponType BwType;
+    typedef WeaponType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return WeaponType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::WeaponType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::WeaponType> {
+    typedef Cast<BWAPI::WeaponType, WeaponType> Type;
+};
+template<>
+struct CastRev<WeaponType> {
+    typedef Cast<BWAPI::WeaponType, WeaponType> Type;
+};
+
 //----------------------------------------------------
 
 template<>

@@ -171,7 +171,7 @@ double Player_topSpeed(Player* self, UnitType unit) {
 }
 
 int Player_weaponMaxRange(Player* self, WeaponType weapon) {
-    return reinterpret_cast<BWAPI::Player>(self)->weaponMaxRange(weapontype_to_bw(weapon));
+    return reinterpret_cast<BWAPI::Player>(self)->weaponMaxRange(cast_to_bw(weapon));
 }
 
 int Player_sightRange(Player* self, UnitType unit) {
@@ -187,7 +187,7 @@ int Player_armor(Player* self, UnitType unit) {
 }
 
 int Player_damage(Player* self, WeaponType wpn) {
-    return reinterpret_cast<BWAPI::Player>(self)->damage(weapontype_to_bw(wpn));
+    return reinterpret_cast<BWAPI::Player>(self)->damage(cast_to_bw(wpn));
 }
 
 int Player_getUnitScore(Player* self) {

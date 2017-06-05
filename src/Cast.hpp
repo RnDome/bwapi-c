@@ -7,8 +7,8 @@
 #include <BWAPI/Event.h>
 #include <BWAPI/EventType.h>
 #include <BWAPI/BulletType.h>
+#include <BWAPI/UnitCommand.h>
 #include <BWAPI/UnitCommandType.h>
-#include <BWAPI/Client/UnitCommand.h>
 
 //____________________________________________//
 // Forward conversion :: BW -> TX

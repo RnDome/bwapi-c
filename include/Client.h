@@ -6,8 +6,6 @@
 extern "C" {
 #endif
 
-typedef struct Client Client;
-
 // return pointer to the client via &BWAPI::BWAPIClient;
 Client* BWAPIC_getClient();
 

@@ -1,5 +1,4 @@
 #include "IteratorImpl.hpp"
-#include <BWAPI/Unitset.h>
 
 #include <assert.h>
 

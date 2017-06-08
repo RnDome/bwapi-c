@@ -3,13 +3,6 @@
 #include <BWAPI/Player.h>
 #include <BWAPI/Unitset.h>
 
-#include "Color.hpp"
-#include "Race.hpp"
-#include "PlayerType.hpp"
-#include "UnitType.hpp"
-#include "TechType.hpp"
-#include "UpgradeType.hpp"
-#include "WeaponType.hpp"
 #include "IteratorImpl.hpp"
 
 int Player_getID(Player* self) {
@@ -27,11 +20,11 @@ UnitIterator* Player_getUnits(Player* self) {
 }
 
 Race Player_getRace(Player* self) {
-    return race_from_bw( reinterpret_cast<BWAPI::Player>(self)->getRace() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Player>(self)->getRace() );
 }
 
 PlayerType Player_getType(Player* self) {
-    return playertype_from_bw( reinterpret_cast<BWAPI::Player>(self)->getType() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Player>(self)->getType() );
 }
 
 Force* Player_getForce(Player* self) {
@@ -107,55 +100,55 @@ int Player_spentGas(Player* self) {
 }
 
 int Player_supplyTotal(Player* self, Race race) {
-    return reinterpret_cast<BWAPI::Player>(self)->supplyTotal(race_to_bw(race));
+    return reinterpret_cast<BWAPI::Player>(self)->supplyTotal(cast_to_bw(race));
 }
 
 int Player_supplyUsed(Player* self, Race race) {
-    return reinterpret_cast<BWAPI::Player>(self)->supplyUsed(race_to_bw(race));
+    return reinterpret_cast<BWAPI::Player>(self)->supplyUsed(cast_to_bw(race));
 }
 
 int Player_allUnitCount(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->allUnitCount(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->allUnitCount(cast_to_bw(unit));
 }
 
 int Player_visibleUnitCount(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->visibleUnitCount(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->visibleUnitCount(cast_to_bw(unit));
 }
 
 int Player_completedUnitCount(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->completedUnitCount(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->completedUnitCount(cast_to_bw(unit));
 }
 
 int Player_incompleteUnitCount(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->incompleteUnitCount(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->incompleteUnitCount(cast_to_bw(unit));
 }
 
 int Player_deadUnitCount(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->deadUnitCount(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->deadUnitCount(cast_to_bw(unit));
 }
 
 int Player_killedUnitCount(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->killedUnitCount(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->killedUnitCount(cast_to_bw(unit));
 }
 
 int Player_getUpgradeLevel(Player* self, UpgradeType upgrade) {
-    return reinterpret_cast<BWAPI::Player>(self)->getUpgradeLevel(upgradetype_to_bw(upgrade));
+    return reinterpret_cast<BWAPI::Player>(self)->getUpgradeLevel(cast_to_bw(upgrade));
 }
 
 bool Player_hasResearched(Player* self, TechType tech) {
-    return reinterpret_cast<BWAPI::Player>(self)->hasResearched(techtype_to_bw(tech));
+    return reinterpret_cast<BWAPI::Player>(self)->hasResearched(cast_to_bw(tech));
 }
 
 bool Player_isResearching(Player* self, TechType tech) {
-    return reinterpret_cast<BWAPI::Player>(self)->isResearching(techtype_to_bw(tech));
+    return reinterpret_cast<BWAPI::Player>(self)->isResearching(cast_to_bw(tech));
 }
 
 bool Player_isUpgrading(Player* self, UpgradeType upgrade) {
-    return reinterpret_cast<BWAPI::Player>(self)->isUpgrading(upgradetype_to_bw(upgrade));
+    return reinterpret_cast<BWAPI::Player>(self)->isUpgrading(cast_to_bw(upgrade));
 }
 
 Color Player_getColor(Player* self) {
-    return color_from_bw( reinterpret_cast<BWAPI::Player>(self)->getColor() );
+    return cast_from_bw( reinterpret_cast<BWAPI::Player>(self)->getColor() );
 }
 
 char Player_getTextColor(Player* self) {
@@ -163,11 +156,11 @@ char Player_getTextColor(Player* self) {
 }
 
 int Player_maxEnergy(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->maxEnergy(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->maxEnergy(cast_to_bw(unit));
 }
 
 double Player_topSpeed(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->topSpeed(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->topSpeed(cast_to_bw(unit));
 }
 
 int Player_weaponMaxRange(Player* self, WeaponType weapon) {
@@ -175,15 +168,15 @@ int Player_weaponMaxRange(Player* self, WeaponType weapon) {
 }
 
 int Player_sightRange(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->sightRange(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->sightRange(cast_to_bw(unit));
 }
 
 int Player_weaponDamageCooldown(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->weaponDamageCooldown(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->weaponDamageCooldown(cast_to_bw(unit));
 }
 
 int Player_armor(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->armor(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->armor(cast_to_bw(unit));
 }
 
 int Player_damage(Player* self, WeaponType wpn) {
@@ -215,17 +208,17 @@ bool Player_isObserver(Player* self) {
 }
 
 int Player_getMaxUpgradeLevel(Player* self, UpgradeType upgrade) {
-    return reinterpret_cast<BWAPI::Player>(self)->getMaxUpgradeLevel(upgradetype_to_bw(upgrade));
+    return reinterpret_cast<BWAPI::Player>(self)->getMaxUpgradeLevel(cast_to_bw(upgrade));
 }
 
 bool Player_isResearchAvailable(Player* self, TechType tech) {
-    return reinterpret_cast<BWAPI::Player>(self)->isResearchAvailable(techtype_to_bw(tech));
+    return reinterpret_cast<BWAPI::Player>(self)->isResearchAvailable(cast_to_bw(tech));
 }
 
 bool Player_isUnitAvailable(Player* self, UnitType unit) {
-    return reinterpret_cast<BWAPI::Player>(self)->isUnitAvailable(unittype_to_bw(unit));
+    return reinterpret_cast<BWAPI::Player>(self)->isUnitAvailable(cast_to_bw(unit));
 }
 
 bool Player_hasUnitTypeRequirement(Player* self, UnitType unit, int amount) {
-    return reinterpret_cast<BWAPI::Player>(self)->hasUnitTypeRequirement(unittype_to_bw(unit), amount);
+    return reinterpret_cast<BWAPI::Player>(self)->hasUnitTypeRequirement(cast_to_bw(unit), amount);
 }

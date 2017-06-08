@@ -12,6 +12,14 @@
 #include <BWAPI/Order.h>
 #include <BWAPI/Input.h>
 #include <BWAPI/WeaponType.h>
+#include <BWAPI/PlayerType.h>
+#include <BWAPI/TechType.h>
+#include <BWAPI/UpgradeType.h>
+#include <BWAPI/Race.h>
+#include <BWAPI/Color.h>
+#include <BWAPI/GameType.h>
+#include <BWAPI/CoordinateType.h>
+#include <BWAPI/Error.h>
 
 //____________________________________________//
 // Forward conversion :: BW -> TX
@@ -122,6 +130,50 @@ struct CastRev<WalkPosition> {
 //----------------------------------------------------
 
 template<>
+struct Cast<BWAPI::CoordinateType::Enum, CoordinateType> {
+    typedef BWAPI::CoordinateType::Enum BwType;
+    typedef CoordinateType              TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return CoordinateType {bw};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return static_cast<BWAPI::CoordinateType::Enum>(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::CoordinateType::Enum> {
+    typedef Cast<BWAPI::CoordinateType::Enum, CoordinateType> Type;
+};
+template<>
+struct CastRev<CoordinateType> {
+    typedef Cast<BWAPI::CoordinateType::Enum, CoordinateType> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Error, Error> {
+    typedef BWAPI::Error BwType;
+    typedef Error        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return Error {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return static_cast<BWAPI::Error>(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Error> {
+    typedef Cast<BWAPI::Error, Error> Type;
+};
+template<>
+struct CastRev<Error> {
+    typedef Cast<BWAPI::Error, Error> Type;
+};
+//----------------------------------------------------
+
+template<>
 struct Cast<BWAPI::BulletType, BulletType> {
     typedef BWAPI::BulletType BwType;
     typedef BulletType        TxType;
@@ -162,6 +214,94 @@ struct CastFwd<BWAPI::UnitType> {
 template<>
 struct CastRev<UnitType> {
     typedef Cast<BWAPI::UnitType, UnitType> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::UpgradeType, UpgradeType> {
+    typedef BWAPI::UpgradeType BwType;
+    typedef UpgradeType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return UpgradeType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::UpgradeType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::UpgradeType> {
+    typedef Cast<BWAPI::UpgradeType, UpgradeType> Type;
+};
+template<>
+struct CastRev<UpgradeType> {
+    typedef Cast<BWAPI::UpgradeType, UpgradeType> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Race, Race> {
+    typedef BWAPI::Race BwType;
+    typedef Race        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return Race {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::Race(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Race> {
+    typedef Cast<BWAPI::Race, Race> Type;
+};
+template<>
+struct CastRev<Race> {
+    typedef Cast<BWAPI::Race, Race> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Color, Color> {
+    typedef BWAPI::Color BwType;
+    typedef Color        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return Color {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::Color(tx.color);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Color> {
+    typedef Cast<BWAPI::Color, Color> Type;
+};
+template<>
+struct CastRev<Color> {
+    typedef Cast<BWAPI::Color, Color> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::GameType, GameType> {
+    typedef BWAPI::GameType BwType;
+    typedef GameType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return GameType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::GameType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::GameType> {
+    typedef Cast<BWAPI::GameType, GameType> Type;
+};
+template<>
+struct CastRev<GameType> {
+    typedef Cast<BWAPI::GameType, GameType> Type;
 };
 //----------------------------------------------------
 
@@ -317,6 +457,50 @@ struct CastFwd<BWAPI::Player> {
 template<>
 struct CastRev<Player*> {
     typedef Cast<BWAPI::Player, Player*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::PlayerType, PlayerType> {
+    typedef BWAPI::PlayerType BwType;
+    typedef PlayerType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return PlayerType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::PlayerType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::PlayerType> {
+    typedef Cast<BWAPI::PlayerType, PlayerType> Type;
+};
+template<>
+struct CastRev<PlayerType> {
+    typedef Cast<BWAPI::PlayerType, PlayerType> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::TechType, TechType> {
+    typedef BWAPI::TechType BwType;
+    typedef TechType        TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return TechType {bw.getID()};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::TechType(tx.id);
+    }
+};
+template<>
+struct CastFwd<BWAPI::TechType> {
+    typedef Cast<BWAPI::TechType, TechType> Type;
+};
+template<>
+struct CastRev<TechType> {
+    typedef Cast<BWAPI::TechType, TechType> Type;
 };
 //----------------------------------------------------
 

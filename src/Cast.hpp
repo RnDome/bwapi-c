@@ -2,24 +2,7 @@
 
 #include <Types.h>
 #include <BwString.h>
-#include <BWAPI/Position.h>
-#include <BWAPI/UnitType.h>
-#include <BWAPI/Event.h>
-#include <BWAPI/EventType.h>
-#include <BWAPI/BulletType.h>
-#include <BWAPI/UnitCommand.h>
-#include <BWAPI/UnitCommandType.h>
-#include <BWAPI/Order.h>
-#include <BWAPI/Input.h>
-#include <BWAPI/WeaponType.h>
-#include <BWAPI/PlayerType.h>
-#include <BWAPI/TechType.h>
-#include <BWAPI/UpgradeType.h>
-#include <BWAPI/Race.h>
-#include <BWAPI/Color.h>
-#include <BWAPI/GameType.h>
-#include <BWAPI/CoordinateType.h>
-#include <BWAPI/Error.h>
+#include <BWAPI.h>
 
 //____________________________________________//
 // Forward conversion :: BW -> TX

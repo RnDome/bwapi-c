@@ -1,7 +1,4 @@
 #include <Region.h>
-#include <BWAPI/Region.h>
-#include <BWAPI/Regionset.h>
-#include <BWAPI/Unitset.h>
 
 #include "IteratorImpl.hpp"
 

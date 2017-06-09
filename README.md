@@ -1,7 +1,7 @@
 bwapi-c
 =======
 
-[![Build Status](https://travis-ci.org/RnDome/bwapi-c.svg?branch=master)](https://travis-ci.org/RnDome/bwapi-c/branches) [![Build status](https://ci.appveyor.com/api/projects/status/3l3mngo6cf33hdrw/branch/master?svg=true)](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master)
+[![Build Status](https://travis-ci.org/RnDome/bwapi-c.svg?branch=master)](https://travis-ci.org/RnDome/bwapi-c/branches) [![Build status](https://ci.appveyor.com/api/projects/status/3l3mngo6cf33hdrw/branch/master?svg=true)](https://ci.appveyor.com/project/kpp/bwapi-c/branch/master) [![release](https://img.shields.io/github/release/RnDome/bwapi-c/all.svg)](https://github.com/RnDome/bwapi-c/releases/latest)
 
 C language bindings to the BWAPI library 
 

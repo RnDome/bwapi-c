@@ -409,7 +409,8 @@ struct Cast<BWAPI::UnitCommand, UnitCommand> {
             cast_to_bw(tx.target),
             tx.x,
             tx.y,
-            tx.extra);
+            tx.extra
+        );
     }
 };
 template<>

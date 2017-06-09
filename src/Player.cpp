@@ -1,7 +1,5 @@
 #include <Player.h>
 #include <BwString.h>
-#include <BWAPI/Player.h>
-#include <BWAPI/Unitset.h>
 
 #include "IteratorImpl.hpp"
 

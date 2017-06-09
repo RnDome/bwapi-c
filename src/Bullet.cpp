@@ -1,5 +1,3 @@
-#include <Bullet.h>
-#include <BWAPI/Bullet.h>
 #include "Cast.hpp"
 
 int Bullet_getID(Bullet* self) {

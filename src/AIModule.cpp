@@ -1,5 +1,4 @@
 #include <AIModule.h>
-#include <BWAPI/AIModule.h>
 #include "Cast.hpp"
 
 class AIModuleWrapper : public BWAPI::AIModule

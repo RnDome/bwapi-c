@@ -1,12 +1,5 @@
 #include <Game.h>
 #include <BwString.h>
-#include <BWAPI/Game.h>
-#include <BWAPI/Unitset.h>
-#include <BWAPI/Playerset.h>
-#include <BWAPI/Forceset.h>
-#include <BWAPI/Bulletset.h>
-#include <BWAPI/Regionset.h>
-#include <BWAPI/Event.h>
 
 #include "IteratorImpl.hpp"
 

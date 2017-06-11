@@ -1,7 +1,5 @@
 #include <AIModule.h>
-#include <BWAPI/AIModule.h>
-
-#include "Position.hpp"
+#include "Cast.hpp"
 
 class AIModuleWrapper : public BWAPI::AIModule
 {
@@ -28,7 +26,7 @@ public:
         module->vtable->onPlayerLeft(module, reinterpret_cast<Player*>(player));
     }
     virtual void onNukeDetect(BWAPI::Position target) override {
-        module->vtable->onNukeDetect(module, position_from_bw(target));
+        module->vtable->onNukeDetect(module, cast_from_bw(target));
     }
     virtual void onUnitDiscover(BWAPI::Unit unit) override {
         module->vtable->onUnitDiscover(module, reinterpret_cast<Unit*>(unit));

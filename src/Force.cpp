@@ -1,7 +1,5 @@
 #include <Force.h>
 #include <BwString.h>
-#include <BWAPI/Force.h>
-#include <BWAPI/Playerset.h>
 
 #include "IteratorImpl.hpp"
 

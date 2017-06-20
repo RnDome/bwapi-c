@@ -102,8 +102,7 @@ PlayerIterator* Game_allies(Game* self);
 PlayerIterator* Game_enemies(Game* self);
 PlayerIterator* Game_observers(Game* self);
 
-// TODO void setTextSize(Text::Size::Enum size);
-
+void Game_setTextSize(Game* self, TextSize size);
 void Game_vDrawText(Game* self, CoordinateType ctype, int x, int y, const char* format, va_list args);
 void Game_drawText(Game* self, CoordinateType ctype, int x, int y, const char* format, ...);
 void Game_drawTextMap(Game* self, Position p, const char* format, ...);

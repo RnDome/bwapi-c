@@ -23,6 +23,7 @@ typedef struct Client_ Client;
 typedef struct Race { int id; } Race;
 typedef struct Order { int id; } Order;
 typedef struct Color { int color; } Color;
+typedef struct TextSize { int size; } TextSize;
 typedef struct CoordinateType { int id; } CoordinateType;
 
 typedef struct MouseButton { int id; } MouseButton;

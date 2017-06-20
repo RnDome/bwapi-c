@@ -118,7 +118,7 @@ struct Cast<BWAPI::CoordinateType::Enum, CoordinateType> {
     typedef CoordinateType              TxType;
 
     inline static TxType from_bw(BwType bw) {
-        return CoordinateType {bw};
+        return CoordinateType {static_cast<int>(bw)};
     }
     inline static BwType to_bw(TxType tx) {
         return static_cast<BWAPI::CoordinateType::Enum>(tx.id);
@@ -267,6 +267,28 @@ struct CastRev<Color> {
 //----------------------------------------------------
 
 template<>
+struct Cast<BWAPI::Text::Size::Enum, TextSize> {
+    typedef BWAPI::Text::Size::Enum BwType;
+    typedef TextSize                TxType;
+
+    inline static TxType from_bw(BwType bw) {
+        return TextSize {static_cast<int>(bw)};
+    }
+    inline static BwType to_bw(TxType tx) {
+        return BWAPI::Text::Size::Enum(tx.size);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Text::Size::Enum> {
+    typedef Cast<BWAPI::Text::Size::Enum, TextSize> Type;
+};
+template<>
+struct CastRev<TextSize> {
+    typedef Cast<BWAPI::Text::Size::Enum, TextSize> Type;
+};
+//----------------------------------------------------
+
+template<>
 struct Cast<BWAPI::GameType, GameType> {
     typedef BWAPI::GameType BwType;
     typedef GameType        TxType;
@@ -294,7 +316,7 @@ struct Cast<BWAPI::EventType::Enum, EventType> {
     typedef EventType              TxType;
 
     inline static TxType from_bw(BwType bw) {
-        return EventType {bw};
+        return EventType {static_cast<int>(bw)};
     }
     inline static BwType to_bw(TxType tx) {
         return BWAPI::EventType::Enum(tx.id);

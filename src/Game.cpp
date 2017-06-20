@@ -383,6 +383,10 @@ PlayerIterator* Game_observers(Game* self) {
     return as_iter<PlayerIterator>(observers);
 }
 
+void Game_setTextSize(Game* self, TextSize size) {
+    reinterpret_cast<BWAPI::Game*>(self)->setTextSize(cast_to_bw(size));
+}
+
 void Game_vDrawText(Game* self, CoordinateType ctype, int x, int y, const char* format, va_list args) {
     reinterpret_cast<BWAPI::Game*>(self)->vDrawText(cast_to_bw(ctype), x, y, format, args);
 }

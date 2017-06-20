@@ -39,10 +39,20 @@ bool isMineralField(Unit* unit) {
         || type_id == 178; // Resource_Mineral_Field_Type_3
 }
 
+void drawWatermark(const int frame_count) {
+    if (20 <= frame_count && frame_count <= 200) {
+        TextSize hugeSize = {.size = 3};
+        Position position = {.x = 224, .y = 20};
+        Game_setTextSize(Broodwar, hugeSize);
+        Game_drawTextScreen(Broodwar, position, "BWAPIC demo");
+    }
+}
+
 void onFrame(AIModule* self) {
     const int frame_count = Game_getFrameCount(Broodwar);
     CoordinateType CoordinateType_None = { .id = 0 };
     Game_drawText(Broodwar, CoordinateType_None, 10, 10, "Frame %d", frame_count);
+    drawWatermark(frame_count);
 
     Player* const ai = Game_self(Broodwar);
 
@@ -146,6 +156,7 @@ void onFrame(AIModule* self) {
 
     Iterator_release(units);
 }
+
 void onSendText(AIModule* module, const char* text) {}
 void onReceiveText(AIModule* module, Player* player, const char* text) {}
 void onPlayerLeft(AIModule* module, Player* player) {}

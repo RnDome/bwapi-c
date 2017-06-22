@@ -26,6 +26,11 @@ find_package(BWAPI REQUIRED)
 # BWAPIC
 
 file(GLOB_RECURSE BWAPIC_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
+if (NOT(MSVC))
+    # FIXME libBWAPIClient.a(Client.cpp.o): unrecognized relocation (0x2a) in section `.text'
+    list(REMOVE_ITEM BWAPIC_SRC ${CMAKE_SOURCE_DIR}/src/Client.cpp)
+endif()
+
 add_library(BWAPIC SHARED ${BWAPIC_SRC})
 target_include_directories(BWAPIC SYSTEM PUBLIC include/ ${BWAPI_INCLUDE_DIRS})
 target_link_libraries(BWAPIC PRIVATE BWAPI BWAPIClient)
@@ -45,8 +50,12 @@ endif()
 install(DIRECTORY include/ DESTINATION include)
 install(TARGETS BWAPIC DESTINATION lib)
 
-install(FILES ${BWAPI_DLL_DEBUG} DESTINATION lib CONFIGURATIONS Debug)
-install(FILES ${BWAPI_DLL_RELEASE} DESTINATION lib CONFIGURATIONS Release RelWithDebInfo MinSizeRel)
+if (UNIX)
+    install(FILES ${BWAPI_DLL} DESTINATION lib)
+else()
+    install(FILES ${BWAPI_DLL_DEBUG} DESTINATION lib CONFIGURATIONS Debug)
+    install(FILES ${BWAPI_DLL_RELEASE} DESTINATION lib CONFIGURATIONS Release RelWithDebInfo MinSizeRel)
+endif(UNIX)
 
 # Package
 

@@ -12,6 +12,9 @@ addons:
   apt:
     packages:
     - p7zip-full
+  artifacts:
+    paths:
+    - $(ls *.zip | tr "\n" ":")
 
 env:
   matrix:
@@ -32,4 +35,4 @@ before_script:
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBWAPI_PATH=$HOME/BWAPI_RELEASES/BWAPI-4.1.12-Linux
 
 script:
-  - cmake --build . -- all --keep-going
+  - cmake --build . -- package --keep-going

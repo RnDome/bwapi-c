@@ -13,18 +13,23 @@ addons:
     packages:
     - p7zip-full
 
+env:
+  matrix:
+    - BUILD_TYPE=Debug
+    - BUILD_TYPE=Release
+
 notifications:
   email: false
 
 before_install:
   - mkdir -p $HOME/BWAPI_RELEASES
-  - wget -N https://github.com/bwapi/bwapi/releases/download/v4.2.0/BWAPI_420.7z -O $HOME/BWAPI_RELEASES/BWAPI_420.7z
-  - 7z x -o$HOME/BWAPI_RELEASES/BWAPI_420 -y $HOME/BWAPI_RELEASES/BWAPI_420.7z
+  - wget -N https://s3.eu-central-1.amazonaws.com/openbw.bwapi/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz -O $HOME/BWAPI_RELEASES/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz
+  - tar xzf $HOME/BWAPI_RELEASES/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz --directory $HOME/BWAPI_RELEASES
 
 before_script:
   - mkdir -p build
   - cd build
-  - cmake .. -DBWAPI_PATH=$HOME/BWAPI_RELEASES/BWAPI_420/Release_Binary
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBWAPI_PATH=$HOME/BWAPI_RELEASES/BWAPI-4.1.12-Linux
 
 script:
   - cmake --build . -- all --keep-going

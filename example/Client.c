@@ -1,6 +1,13 @@
-// i686-w64-mingw32-gcc -mabi=ms -o Client.exe Client.c -I../include -L. -lBWAPIC
+// mingw on linux: i686-w64-mingw32-gcc -mabi=ms -o Client.exe Client.c -I../include -L. -lBWAPIC
+// gcc   on linux: you can't connect to BW using client, because openbw/bwapi v4.1.12 does not support it :(
 
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+    #define Sleep sleep
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 

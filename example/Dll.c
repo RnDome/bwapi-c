@@ -1,6 +1,13 @@
-// i686-w64-mingw32-gcc -mabi=ms -shared -o Dll.dll Dll.c -I../include -L. -lBWAPIC
+// mingw on linux: i686-w64-mingw32-gcc -mabi=ms -shared -o Dll.dll Dll.c -I../include -L. -lBWAPIC
+// gcc   on linux: gcc -shared -fPIC -o Dll.so Dll.c -I../include -L. -lBWAPIC
 
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+    #define DLLEXPORT __declspec(dllexport)
+#else
+    #define DLLEXPORT
+#endif
+
 #include <assert.h>
 #include <stdlib.h>
 
@@ -25,7 +32,7 @@ typedef struct ExampleAIModule
 
 void onStart(AIModule* self) {
     ExampleAIModule* module = (ExampleAIModule*) self;
-    Game_sendText(Broodwar, "Hello from AIModule!");
+    Game_sendText(Broodwar, "Hello from bwapi-c!");
     Game_sendText(Broodwar, "My name is %s", module->name);
 }
 void onEnd(AIModule* module, bool isWinner) {
@@ -89,7 +96,8 @@ void onFrame(AIModule* self) {
         if (!Iterator_valid(positions)) {
             Game_sendText(Broodwar, "Start location iterator is empty.");
         }
-        for(int i = 0; Iterator_valid(positions); Iterator_next(positions), i++) {
+        int i;
+        for(i = 0; Iterator_valid(positions); Iterator_next(positions), i++) {
             const TilePosition tp = *(TilePosition*) Iterator_get(positions);
             Game_sendText(Broodwar, "Start location %d = (%d, %d)", i, tp.x, tp.y);
         }
@@ -130,7 +138,8 @@ void onFrame(AIModule* self) {
 
                 Iterator* const tqueue = (Iterator*) Unit_getTrainingQueue(unit);
                 assert(tqueue);
-                for (int x = 10, y = 20; Iterator_valid(tqueue); Iterator_next(tqueue), y += 10) {
+                int x, y;
+                for (x = 10, y = 20; Iterator_valid(tqueue); Iterator_next(tqueue), y += 10) {
                     UnitType* const unittype = (UnitType*) Iterator_get(tqueue);
                     assert(unittype);
 
@@ -192,11 +201,11 @@ static AIModule_vtable module_vtable = {
     onUnitComplete
 };
 
-__declspec(dllexport) void gameInit(BWAPI_Game* game) {
+DLLEXPORT void gameInit(BWAPI_Game* game) {
     Broodwar = (Game*) game;
     BWAPIC_setGame(Broodwar);
 }
-__declspec(dllexport) BWAPI_AIModule* newAIModule() {
+DLLEXPORT BWAPI_AIModule* newAIModule() {
     ExampleAIModule* const module = (ExampleAIModule*) malloc( sizeof(ExampleAIModule) );
     module->name = "ExampleAIModule";
     module->vtable_ = &module_vtable;
@@ -204,6 +213,7 @@ __declspec(dllexport) BWAPI_AIModule* newAIModule() {
     return (BWAPI_AIModule*) createAIModuleWrapper( (AIModule*) module );
 }
 
+#ifdef _WIN32
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved )
 {
     switch (ul_reason_for_call)
@@ -215,3 +225,4 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     }
     return TRUE;
 }
+#endif

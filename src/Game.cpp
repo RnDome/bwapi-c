@@ -2,6 +2,7 @@
 #include <BwString.h>
 
 #include "IteratorImpl.hpp"
+#include <cassert>
 
 void BWAPIC_setGame(Game* game) {
     BWAPI::BroodwarPtr = reinterpret_cast<BWAPI::Game*>(game);
@@ -349,6 +350,18 @@ void Game_restartGame(Game* self) {
 
 void Game_setLocalSpeed(Game* self, int speed) {
     reinterpret_cast<BWAPI::Game*>(self)->setLocalSpeed(speed);
+}
+
+bool Game_issueCommand(Game* self, UnitIterator* units, UnitCommand command) {
+    IteratorBase* iter = reinterpret_cast<IteratorBase*>(units);
+    assert(iter->id() == itUnit);
+    BWAPI::Unitset unitset;
+    for (; iter->valid(); iter->next()) {
+        Unit* const unit = reinterpret_cast<Unit*>(iter->get());
+        assert(unit);
+        unitset.insert(cast_to_bw(unit));
+    }
+    return reinterpret_cast<BWAPI::Game*>(self)->issueCommand(unitset, cast_to_bw(command));
 }
 
 UnitIterator* Game_getSelectedUnits(Game* self) {

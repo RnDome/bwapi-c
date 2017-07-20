@@ -90,7 +90,7 @@ void Game_leaveGame(Game* self);
 void Game_restartGame(Game* self);
 void Game_setLocalSpeed(Game* self, int speed);
 
-//TODO virtual bool issueCommand(const Unitset& units, UnitCommand command);
+bool Game_issueCommand(Game* self, UnitIterator* units, UnitCommand command);
 
 UnitIterator* Game_getSelectedUnits(Game* self);
 

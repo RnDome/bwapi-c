@@ -1,4 +1,5 @@
 #include "Cast.hpp"
+#include "Interface.hpp"
 
 int Bullet_getID(Bullet* self) {
     return reinterpret_cast<BWAPI::Bullet>(self)->getID();
@@ -50,4 +51,9 @@ int Bullet_getRemoveTimer(Bullet* self) {
 
 bool Bullet_isVisible(Bullet* self, Player* player) {
     return reinterpret_cast<BWAPI::Bullet>(self)->isVisible(reinterpret_cast<BWAPI::Player>(player));
+}
+
+void Bullet_registerEvent(Bullet* self, void (* const action)(Bullet*), bool (* const condition)(Bullet*),
+                          int timesToRun, int framesToCheck) {
+    Interface_registerEvent<Bullet>(self, action, condition, timesToRun, framesToCheck);
 }

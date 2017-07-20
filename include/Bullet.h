@@ -19,6 +19,7 @@ Unit* Bullet_getTarget(Bullet* self);
 Position Bullet_getTargetPosition(Bullet* self);
 int Bullet_getRemoveTimer(Bullet* self);
 bool Bullet_isVisible(Bullet* self, Player* player);
+void Bullet_registerEvent(Bullet* self, void (* const action)(Bullet*), bool (* const condition)(Bullet*), int timesToRun, int framesToCheck);
 
 #ifdef __cplusplus
 } // extern "C"

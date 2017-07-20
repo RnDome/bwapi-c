@@ -2,6 +2,7 @@
 #include <BwString.h>
 
 #include "IteratorImpl.hpp"
+#include "Interface.hpp"
 
 int Player_getID(Player* self) {
     return reinterpret_cast<BWAPI::Player>(self)->getID();
@@ -219,4 +220,9 @@ bool Player_isUnitAvailable(Player* self, UnitType unit) {
 
 bool Player_hasUnitTypeRequirement(Player* self, UnitType unit, int amount) {
     return reinterpret_cast<BWAPI::Player>(self)->hasUnitTypeRequirement(cast_to_bw(unit), amount);
+}
+
+void Player_registerEvent(Player* self, void (* const action)(Player*), bool (* const condition)(Player*),
+                          int timesToRun, int framesToCheck) {
+    Interface_registerEvent<Player>(self, action, condition, timesToRun, framesToCheck);
 }

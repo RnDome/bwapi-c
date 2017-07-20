@@ -331,6 +331,7 @@ bool Unit_canUseTechPosition_Position(Unit* self, TechType tech, Position target
 
 bool Unit_canPlaceCOP(Unit* self, bool checkCommandibility);
 bool Unit_canPlaceCOP_TilePosition(Unit* self, TilePosition target, bool checkCanIssueCommandType, bool checkCommandibility);
+void Unit_registerEvent(Unit* self, void (*const action)(Unit*), bool (*const condition)(Unit*), int timesToRun, int framesToCheck);
 
 #ifdef __cplusplus
 }

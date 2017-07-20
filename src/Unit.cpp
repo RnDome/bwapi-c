@@ -1,6 +1,7 @@
 #include <Unit.h>
 
 #include "IteratorImpl.hpp"
+#include "Interface.hpp"
 
 int Unit_getID(Unit* self) {
     return reinterpret_cast<BWAPI::Unit>(self)->getID();
@@ -1131,4 +1132,9 @@ bool Unit_canPlaceCOP(Unit* self, bool checkCommandibility) {
 
 bool Unit_canPlaceCOP_TilePosition(Unit* self, TilePosition target, bool checkCanIssueCommandType, bool checkCommandibility) {
     return reinterpret_cast<BWAPI::Unit>(self)->canPlaceCOP(cast_to_bw(target), checkCanIssueCommandType, checkCommandibility);
+}
+
+void Unit_registerEvent(Unit* self, void (* const action)(Unit*), bool (* const condition)(Unit*),
+                        int timesToRun, int framesToCheck) {
+    Interface_registerEvent<Unit>(self, action, condition, timesToRun, framesToCheck);
 }

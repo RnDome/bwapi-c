@@ -2,6 +2,7 @@
 #include <BwString.h>
 
 #include "IteratorImpl.hpp"
+#include "Interface.hpp"
 #include <cassert>
 
 void BWAPIC_setGame(Game* game) {
@@ -643,4 +644,9 @@ int Game_getDamageTo(Game* self, UnitType toType, UnitType fromType, Player* toP
 
 unsigned Game_getRandomSeed(Game* self) {
     return reinterpret_cast<BWAPI::Game*>(self)->getRandomSeed();
+}
+
+void Game_registerEvent(Game* self, void (* const action)(Game*), bool (* const condition)(Game*),
+                        int timesToRun, int framesToCheck) {
+    Interface_registerEvent<Game>(self, action, condition, timesToRun, framesToCheck);
 }

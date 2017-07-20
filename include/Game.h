@@ -162,6 +162,7 @@ TilePosition Game_getBuildLocation(Game* self, UnitType type, TilePosition desir
 int Game_getDamageFrom(Game* self, UnitType fromType, UnitType toType, Player* fromPlayer, Player* toPlayer);
 int Game_getDamageTo(Game* self, UnitType toType, UnitType fromType, Player* toPlayer, Player* fromPlayer);
 unsigned Game_getRandomSeed(Game* self);
+void Game_registerEvent(Game* self, void (* const action)(Game*), bool (* const condition)(Game*), int timesToRun, int framesToCheck);
 
 #ifdef __cplusplus
 } // extern "C"

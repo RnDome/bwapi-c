@@ -1,6 +1,7 @@
 #include <Region.h>
 
 #include "IteratorImpl.hpp"
+#include "Interface.hpp"
 
 int Region_getID(Region* self) {
     return reinterpret_cast<BWAPI::Region>(self)->getID();
@@ -63,4 +64,9 @@ UnitIterator* Region_getUnits(Region* self, UnaryUnitFilter pred) {
     auto pred_filter = reinterpret_cast<bool (*)(BWAPI::Unit)>(pred);
     auto&& units = reinterpret_cast<BWAPI::Region>(self)->getUnits(pred_filter);
     return into_iter<UnitIterator>(std::move(units));
+}
+
+void Region_registerEvent(Region* self, void (* const action)(Region*), bool (* const condition)(Region*),
+                          int timesToRun, int framesToCheck) {
+    Interface_registerEvent<Region>(self, action, condition, timesToRun, framesToCheck);
 }

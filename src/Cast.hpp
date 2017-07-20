@@ -47,6 +47,132 @@ typename CastRev<TX>::Type::BwType cast_to_bw(TX tx) {
 // Cast specializations go here  //
 
 template<>
+struct Cast<BWAPI::Game*, Game*> {
+    typedef BWAPI::Game* BwType;
+    typedef Game*        TxType;
+    inline static TxType from_bw(BwType bw) {
+        return reinterpret_cast<Game*>(bw);
+    }
+    inline static BwType to_bw(TxType tx) {
+        return reinterpret_cast<BWAPI::Game*>(tx);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Game*> {
+    typedef Cast<BWAPI::Game*, Game*> Type;
+};
+template<>
+struct CastRev<Game*> {
+    typedef Cast<BWAPI::Game*, Game*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Bullet, Bullet*> {
+    typedef BWAPI::Bullet BwType;
+    typedef Bullet*       TxType;
+    static TxType from_bw(BwType bw) {
+        return reinterpret_cast<Bullet*>(bw);
+    }
+    static BwType to_bw(TxType tx) {
+        return reinterpret_cast<BWAPI::Bullet>(tx);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Bullet> {
+    typedef Cast<BWAPI::Bullet, Bullet*> Type;
+};
+template<>
+struct CastRev<Bullet*> {
+    typedef Cast<BWAPI::Bullet, Bullet*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Region, Region*> {
+    typedef BWAPI::Region BwType;
+    typedef Region*       TxType;
+    inline static TxType from_bw(BwType bw) {
+        return reinterpret_cast<Region*>(bw);
+    }
+    inline static BwType to_bw(TxType tx) {
+        return reinterpret_cast<BWAPI::Region>(tx);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Region> {
+    typedef Cast<BWAPI::Region, Region*> Type;
+};
+template<>
+struct CastRev<Region*> {
+    typedef Cast<BWAPI::Region, Region*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Force, Force*> {
+    typedef BWAPI::Force BwType;
+    typedef Force*       TxType;
+    inline static TxType from_bw(BwType bw) {
+        return reinterpret_cast<Force*>(bw);
+    }
+    inline static BwType to_bw(TxType tx) {
+        return reinterpret_cast<BWAPI::Force>(tx);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Force> {
+    typedef Cast<BWAPI::Force, Force*> Type;
+};
+template<>
+struct CastRev<Force*> {
+    typedef Cast<BWAPI::Force, Force*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Unit, Unit*> {
+    typedef BWAPI::Unit BwType;
+    typedef Unit*       TxType;
+    static TxType from_bw(BwType bw) {
+        return reinterpret_cast<Unit*>(bw);
+    }
+    static BwType to_bw(TxType tx) {
+        return reinterpret_cast<BWAPI::Unit>(tx);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Unit> {
+    typedef Cast<BWAPI::Unit, Unit*> Type;
+};
+template<>
+struct CastRev<Unit*> {
+    typedef Cast<BWAPI::Unit, Unit*> Type;
+};
+//----------------------------------------------------
+
+template<>
+struct Cast<BWAPI::Player, Player*> {
+    typedef BWAPI::Player BwType;
+    typedef Player*       TxType;
+    static TxType from_bw(BwType bw) {
+        return reinterpret_cast<Player*>(bw);
+    }
+    static BwType to_bw(TxType tx) {
+        return reinterpret_cast<BWAPI::Player>(tx);
+    }
+};
+template<>
+struct CastFwd<BWAPI::Player> {
+    typedef Cast<BWAPI::Player, Player*> Type;
+};
+template<>
+struct CastRev<Player*> {
+    typedef Cast<BWAPI::Player, Player*> Type;
+};
+//----------------------------------------------------
+
+template<>
 struct Cast<BWAPI::Position, Position> {
     typedef BWAPI::Position BwType;
     typedef Position        TxType;
@@ -389,27 +515,6 @@ struct Cast<std::string, BwString*> {
 //----------------------------------------------------
 
 template<>
-struct Cast<BWAPI::Unit, Unit*> {
-    typedef BWAPI::Unit BwType;
-    typedef Unit*       TxType;
-    static TxType from_bw(BwType bw) {
-        return reinterpret_cast<Unit*>(bw);
-    }
-    static BwType to_bw(TxType tx) {
-        return reinterpret_cast<BWAPI::Unit>(tx);
-    }
-};
-template<>
-struct CastFwd<BWAPI::Unit> {
-    typedef Cast<BWAPI::Unit, Unit*> Type;
-};
-template<>
-struct CastRev<Unit*> {
-    typedef Cast<BWAPI::Unit, Unit*> Type;
-};
-
-//----------------------------------------------------
-template<>
 struct Cast<BWAPI::UnitCommand, UnitCommand> {
     typedef BWAPI::UnitCommand BwType;
     typedef UnitCommand        TxType;
@@ -442,27 +547,6 @@ struct CastFwd<BWAPI::UnitCommand> {
 template<>
 struct CastRev<UnitCommand> {
     typedef Cast<BWAPI::UnitCommand, UnitCommand> Type;
-};
-//----------------------------------------------------
-
-template<>
-struct Cast<BWAPI::Player, Player*> {
-    typedef BWAPI::Player BwType;
-    typedef Player*       TxType;
-    static TxType from_bw(BwType bw) {
-        return reinterpret_cast<Player*>(bw);
-    }
-    static BwType to_bw(TxType tx) {
-        return reinterpret_cast<BWAPI::Player>(tx);
-    }
-};
-template<>
-struct CastFwd<BWAPI::Player> {
-    typedef Cast<BWAPI::Player, Player*> Type;
-};
-template<>
-struct CastRev<Player*> {
-    typedef Cast<BWAPI::Player, Player*> Type;
 };
 //----------------------------------------------------
 

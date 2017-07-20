@@ -60,6 +60,7 @@ int Player_getMaxUpgradeLevel(Player* self, UpgradeType upgrade);
 bool Player_isResearchAvailable(Player* self, TechType tech);
 bool Player_isUnitAvailable(Player* self, UnitType unit);
 bool Player_hasUnitTypeRequirement(Player* self, UnitType unit, int amount);
+void Player_registerEvent(Player* self, void (*const action)(Player*), bool (*const condition)(Player*), int timesToRun, int framesToCheck);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -21,6 +21,7 @@ Region* Region_getClosestAccessibleRegion(Region* self);
 Region* Region_getClosestInaccessibleRegion(Region* self);
 int Region_getDistance(Region* self, Region* other);
 UnitIterator* Region_getUnits(Region* self, UnaryUnitFilter pred);
+void Region_registerEvent(Region* self, void (*const action)(Region*), bool (*const condition)(Region*), int timesToRun, int framesToCheck);
 
 #ifdef __cplusplus
 } // extern "C"

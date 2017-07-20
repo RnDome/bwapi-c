@@ -1,35 +1,37 @@
 language: cpp
 
-compiler:
-  - gcc
-  - clang
+compiler: gcc
 
+os: linux
 dist: trusty
 sudo: false
+
+notifications:
+  email: false
+
 cache:
   apt: true
 addons:
   apt:
+    sources:
+      - sourceline: 'deb http://pl.archive.ubuntu.com/ubuntu xenial main universe'
+      - sourceline: 'deb http://pl.archive.ubuntu.com/ubuntu xenial main'
     packages:
-    - p7zip-full
+      - g++
+      - p7zip-full
   artifacts:
     paths:
-    - $(ls *.zip | tr "\n" ":")
+      - $(ls *.zip | tr "\n" :)
 
 env:
   matrix:
     - BUILD_TYPE=Debug
     - BUILD_TYPE=Release
 
-notifications:
-  email: false
-
-before_install:
-  - mkdir -p $HOME/BWAPI_RELEASES
-  - wget -N https://s3.eu-central-1.amazonaws.com/openbw.bwapi/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz -O $HOME/BWAPI_RELEASES/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz
-  - tar xzf $HOME/BWAPI_RELEASES/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz --directory $HOME/BWAPI_RELEASES
-
 before_script:
+  - mkdir -p $HOME/BWAPI_RELEASES
+  - wget -N https://s3.amazonaws.com/bwapic/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz -O $HOME/BWAPI_RELEASES/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz
+  - tar xzf $HOME/BWAPI_RELEASES/BWAPI-4.1.12-${BUILD_TYPE}-Linux.tar.gz --directory $HOME/BWAPI_RELEASES
   - mkdir -p build
   - cd build
   - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBWAPI_PATH=$HOME/BWAPI_RELEASES/BWAPI-4.1.12-Linux

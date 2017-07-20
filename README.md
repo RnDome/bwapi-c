@@ -19,7 +19,39 @@ bwapi-c/build $ make
 
 `BWAPI_PATH` must point to directory with BWAPI release.
 
-# Usage on Linux
+# Usage on Linux with GCC for BWAPILauncher
+You should get `libBWAPIC.so` that was build on Linux with GCC. See [Releases](https://github.com/RnDome/bwapi-c/releases).
+
+### Module
+
+```
+~/bwapi-c/example $ ls
+libBWAPIC.so Dll.c
+~/bwapi-c/example $ gcc -shared -fPIC -o Dll.so Dll.c -I../include -L. -lBWAPIC
+~/bwapi-c/example $ ls
+Dll.c Dll.so libBWAPIC.so
+```
+
+Put `libBWAPIC.so` and `Dll.so` inside `BWAPILauncher` directory, copy `BrooDat.mpq`, `Patch_rt.mpq`, `StarDat.mpq`, `maps` from `StarCraft` directory. Set up `bwapi-data/bwapi.ini` (unset `ai`, `ai_dbg`, set `map`, e.g. `map=maps/BroodWar/ICCup Tau Cross.scx`) and run:
+```
+~/openbw/bwapi/build/bin$ BWAPI_CONFIG_AI__AI=Dll.so BWAPI_CONFIG_AUTO_MENU__RACE=Zerg ./BWAPILauncher
+```
+
+#### Troubleshooting
+
+If you are getting dlerror while injecting your module inside `BWAPILauncher`, recompile `bwapi-c` on you local machine and recompile your `Dll.so`.
+
+Possible errors:
+```
+dlerror: libBWAPIC.so: undefined symbol: _ZNK5BWAPI5Event7getTextB5cxx11Ev
+```
+This is caused by different compiler flags on your machine. `libBWAPIC.so` was built with `--with-default-libstdcxx-abi=new`, and your compiler is probably `--with-default-libstdcxx-abi=gcc4-compatible --disable-libstdcxx-dual-abi`. Recompiling `OpenBW` and `bwapi-c` with the same compiler will fix this problem.
+
+### Client
+
+You may compile it, but it is not supported by OpenBW for now.
+
+# Usage on Linux with MinGW for StarCraft.exe
 You should get `BWAPIC.lib`, `BWAPIC.dll` and `BWAPI.dll` that was build on Windows with MSVC. See [Releases](https://github.com/RnDome/bwapi-c/releases).
 
 ### Module
@@ -29,7 +61,7 @@ You should get `BWAPIC.lib`, `BWAPIC.dll` and `BWAPI.dll` that was build on Wind
 BWAPIC.lib Dll.c
 ~/bwapi-c/example $ i686-w64-mingw32-gcc -mabi=ms -shared -o Dll.dll Dll.c -I../include -L. -lBWAPIC
 ~/bwapi-c/example $ ls
-BWAPIC.lib  Dll.cpp  Dll.dll
+Dll.c Dll.dll BWAPIC.lib
 ```
 
 Put `BWAPIC.dll` inside `StarCraft` directory and `Dll.dll` inside `StarCraft/bwapi-data`.

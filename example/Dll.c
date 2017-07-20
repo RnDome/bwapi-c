@@ -30,6 +30,12 @@ typedef struct ExampleAIModule
     const char* name;
 } ExampleAIModule;
 
+bool isMineralField(Unit* unit);
+void drawWatermark(const int frame_count);
+void printStartLocations();
+void printEvent();
+void registerEventHandler(Game* game);
+
 void onStart(AIModule* self) {
     ExampleAIModule* module = (ExampleAIModule*) self;
     Game_sendText(Broodwar, "Hello from bwapi-c!");
@@ -37,22 +43,6 @@ void onStart(AIModule* self) {
 }
 void onEnd(AIModule* module, bool isWinner) {
     Game_sendText(Broodwar, "Game ended");
-}
-
-bool isMineralField(Unit* unit) {
-    int type_id = Unit_getType(unit).id;
-    return type_id == 176  // Resource_Mineral_Field
-        || type_id == 177  // Resource_Mineral_Field_Type_2
-        || type_id == 178; // Resource_Mineral_Field_Type_3
-}
-
-void drawWatermark(const int frame_count) {
-    if (20 <= frame_count && frame_count <= 200) {
-        TextSize hugeSize = {.size = 3};
-        Position position = {.x = 224, .y = 20};
-        Game_setTextSize(Broodwar, hugeSize);
-        Game_drawTextScreen(Broodwar, position, "BWAPIC demo");
-    }
 }
 
 void onFrame(AIModule* self) {
@@ -63,45 +53,17 @@ void onFrame(AIModule* self) {
 
     Player* const ai = Game_self(Broodwar);
 
-    if (true) {
-        // getEvents test
-        Iterator* const events = (Iterator*) Game_getEvents(Broodwar);
-        assert(events);
-        for(; Iterator_valid(events); Iterator_next(events)) {
-            const Event e = * (Event*)Iterator_get(events);
-            if (e.type.id != 2) { // MatchFrame
-                Game_sendText(Broodwar, "EventType = (%d)", e.type.id);
-                Game_sendText(Broodwar, "Position = (%d,%d)", e.position.x, e.position.y);
-                if (e.player) {
-                    Game_sendText(Broodwar, "Player minerals = %d", Player_minerals(e.player));
-                } else {
-                    Game_sendText(Broodwar, "Player = NULL");
-                }
-                if (e.unit) {
-                    Game_sendText(Broodwar, "Unit id = %d", Unit_getID(e.unit));
-                } else {
-                    Game_sendText(Broodwar, "Unit = NULL");
-                }
-                BwString* txt = Event_getText(&e);
-                Game_sendText(Broodwar, "Text = (%s)", BwString_data(txt));
-                BwString_release(txt);
-            }
-        }
-        Iterator_release(events);
+    if (0 < frame_count && frame_count < 1000) {
+        printEvent();
     }
 
     if (frame_count == 50) {
-        // getStartLocations test
-        Iterator* const positions = (Iterator*) Game_getStartLocations(Broodwar);
-        if (!Iterator_valid(positions)) {
-            Game_sendText(Broodwar, "Start location iterator is empty.");
-        }
-        int i;
-        for(i = 0; Iterator_valid(positions); Iterator_next(positions), i++) {
-            const TilePosition tp = *(TilePosition*) Iterator_get(positions);
-            Game_sendText(Broodwar, "Start location %d = (%d, %d)", i, tp.x, tp.y);
-        }
-        Iterator_release(positions);
+        printStartLocations();
+    }
+
+    if (frame_count == 150) {
+        // registerEvent test
+        Game_registerEvent(Broodwar, &registerEventHandler, NULL, 10, 0);
     }
 
     Iterator* const units = (Iterator*) Player_getUnits(ai);
@@ -162,9 +124,73 @@ void onFrame(AIModule* self) {
 
         }
     }
-
     Iterator_release(units);
 }
+
+
+bool isMineralField(Unit* unit) {
+    int type_id = Unit_getType(unit).id;
+    return type_id == 176  // Resource_Mineral_Field
+           || type_id == 177  // Resource_Mineral_Field_Type_2
+           || type_id == 178; // Resource_Mineral_Field_Type_3
+}
+
+void drawWatermark(const int frame_count) {
+    if (20 <= frame_count && frame_count <= 200) {
+        TextSize hugeSize = {.size = 3};
+        Position position = {.x = 224, .y = 20};
+        Game_setTextSize(Broodwar, hugeSize);
+        Game_drawTextScreen(Broodwar, position, "BWAPIC demo");
+    }
+}
+
+// the example of Game_getEvents
+void printEvent() {
+    Iterator* const events = (Iterator*) Game_getEvents(Broodwar);
+    assert(events);
+
+    // print only the first event because in OpenBW this code really spams too many in the console
+    if (Iterator_valid(events)) {
+        const Event e = * (Event*)Iterator_get(events);
+        if (e.type.id != 2) { // MatchFrame
+            Game_sendText(Broodwar, "EventType = (%d)", e.type.id);
+            Game_sendText(Broodwar, "Position = (%d,%d)", e.position.x, e.position.y);
+            if (e.player) {
+                Game_sendText(Broodwar, "Player minerals = %d", Player_minerals(e.player));
+            } else {
+                Game_sendText(Broodwar, "Player = NULL");
+            }
+            if (e.unit) {
+                Game_sendText(Broodwar, "Unit id = %d", Unit_getID(e.unit));
+            } else {
+                Game_sendText(Broodwar, "Unit = NULL");
+            }
+            BwString* txt = Event_getText(&e);
+            Game_sendText(Broodwar, "Text = (%s)", BwString_data(txt));
+            BwString_release(txt);
+        }
+    }
+    Iterator_release(events);
+}
+
+// the example of Game_getStartLocations
+void printStartLocations() {
+    Iterator* const positions = (Iterator*) Game_getStartLocations(Broodwar);
+    if (!Iterator_valid(positions)) {
+        Game_sendText(Broodwar, "Start location iterator is empty.");
+    }
+    int i;
+    for(i = 0; Iterator_valid(positions); Iterator_next(positions), i++) {
+        const TilePosition tp = *(TilePosition*) Iterator_get(positions);
+        Game_sendText(Broodwar, "Start location %d = (%d, %d)", i, tp.x, tp.y);
+    }
+    Iterator_release(positions);
+}
+
+void registerEventHandler(Game* game) {
+    Game_sendText(game, "The message from registerEventHandler");
+}
+
 
 void onSendText(AIModule* module, const char* text) {}
 void onReceiveText(AIModule* module, Player* player, const char* text) {}

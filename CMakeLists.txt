@@ -30,6 +30,7 @@ file(GLOB_RECURSE BWAPIC_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 add_library(BWAPIC SHARED ${BWAPIC_SRC})
 target_include_directories(BWAPIC SYSTEM PUBLIC include/ ${BWAPI_INCLUDE_DIRS})
 target_link_libraries(BWAPIC PRIVATE BWAPI BWAPIClient)
+set_property(TARGET BWAPIC PROPERTY INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 # Examples
 

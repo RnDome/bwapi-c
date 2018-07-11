@@ -149,7 +149,7 @@ void printEvent() {
     Iterator* const events = (Iterator*) Game_getEvents(Broodwar);
     assert(events);
 
-    // print only the first event because in OpenBW this code really spams too many in the console
+    // print only the first event because in OpenBW this code really spams too much to the console
     if (Iterator_valid(events)) {
         const Event e = * (Event*)Iterator_get(events);
         if (e.type.id != 2) { // MatchFrame

@@ -23,7 +23,7 @@ install:
 
 before_build:
     - cmd: mkdir deps
-    - cmd: curl --silent --retry 10 -kLy 5 -o deps/BWAPI_420.7z "https://github.com/bwapi/bwapi/releases/download/v4.2.0/BWAPI_420.7z"
+    - cmd: curl --silent --retry 10 -kLy 5 -o deps/BWAPI_420.7z "https://github.com/bwapi/bwapi/releases/download/v4.2.0/BWAPI_420.old.7z"
     - cmd: 7z x -odeps\BWAPI_420 -y deps\BWAPI_420.7z
     - cmd: mkdir build
     - cmd: cd build
